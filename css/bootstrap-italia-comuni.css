@@ -30444,7 +30444,7 @@ select::-ms-expand {
   }
 }
 body {
-  font-family: Titillium Web;
+  font-family: "Titillium Web", Geneva, Tahoma, sans-serif;
   color: #191919;
 }
 .form-check [type="checkbox"]:focus + label,
@@ -33881,7 +33881,10 @@ span.pagination {
    clip-path lo limita verticalmente all'altezza della sezione e
    orizzontalmente a 100vw per ogni lato, prevenendo lo scrollbar. */
 .blog-servizi .servizi-explore,
-.blog-notizie .notizie-explore {
+.blog-notizie .notizie-explore,
+.blog-amministrazione .amministrazione-evidenza,
+.blog-vivere .vivere-eventi,
+.blog-vivere .vivere-luoghi {
   background-color: #f5f5f5;
   box-shadow: 0 0 0 100vw #f5f5f5;
   clip-path: inset(0 -100vw);

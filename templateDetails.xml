@@ -102,6 +102,22 @@
         </field>
       </fieldset>
 
+      <fieldset name="contatta" label="TPL_ACCESSIBILE_CONTATTA_FIELDSET_LABEL">
+        <field name="footer_faq" type="menuitem" label="TPL_ACCESSIBILE_FOOTER_FAQ_LABEL" description="TPL_ACCESSIBILE_FOOTER_FAQ_DESC" default="">
+          <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
+        </field>
+        <field name="footer_contacts" type="menuitem" label="TPL_ACCESSIBILE_FOOTER_CONTACTS_LABEL" description="TPL_ACCESSIBILE_FOOTER_CONTACTS_DESC" default="">
+          <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
+        </field>
+        <field name="footer_phone" type="text" label="TPL_ACCESSIBILE_FOOTER_PHONE_LABEL" description="TPL_ACCESSIBILE_FOOTER_PHONE_DESC" default="" size="20" />
+        <field name="footer_appointment_booking" type="menuitem" label="TPL_ACCESSIBILE_FOOTER_APPOINTMENT_LABEL" description="TPL_ACCESSIBILE_FOOTER_APPOINTMENT_DESC" default="">
+          <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
+        </field>
+        <field name="footer_report" type="menuitem" label="TPL_ACCESSIBILE_FOOTER_REPORT_LABEL" description="TPL_ACCESSIBILE_FOOTER_REPORT_DESC" default="">
+          <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
+        </field>
+      </fieldset>
+
       <fieldset name="social" label="TPL_ACCESSIBILE_SOCIAL_LABEL">
         <field name="socialx" type="url" label="TPL_ACCESSIBILE_SOCIAL_X_LABEL" description="TPL_ACCESSIBILE_SOCIAL_X_DESC" size="20" />
         <field name="facebook" type="url" label="TPL_ACCESSIBILE_SOCIAL_FB_LABEL" description="TPL_ACCESSIBILE_SOCIAL_FB_DESC" size="20" />
@@ -141,6 +157,9 @@
           <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
         </field>
         <field name="de_all_topics" type="menuitem" label="TPL_ACCESSIBILE_DE_ALL_TOPICS_LABEL" description="TPL_ACCESSIBILE_DE_ALL_TOPICS_DESC" default="">
+          <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
+        </field>
+        <field name="de_legal_notes" type="menuitem" label="TPL_ACCESSIBILE_DE_LEGAL_NOTES_LABEL" description="TPL_ACCESSIBILE_DE_LEGAL_NOTES_DESC" default="">
           <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
         </field>
 

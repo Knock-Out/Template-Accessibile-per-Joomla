@@ -35,6 +35,7 @@ foreach ([
     'de_accessibility_link'  => 'accessibility-link',
     'de_privacy_policy_link' => 'privacy-policy-link',
     'de_all_topics'          => 'all-topics',
+    'de_legal_notes'         => 'legal-notes',
 ] as $paramName => $deValue) {
     $itemId = (int) $tplParams->get($paramName, 0);
     if ($itemId > 0) {

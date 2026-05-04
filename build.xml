@@ -18,7 +18,7 @@
 
     <!-- Copy template files to build dir, replacing version/date tokens -->
     <target name="prepare">
-        <!-- Single files -->
+        <!-- Text files: token replacement applies -->
         <copy todir="${build}">
             <fileset dir=".">
                 <include name="README.md"/>
@@ -26,25 +26,9 @@
                 <include name="index.php"/>
                 <include name="offline.php"/>
                 <include name="templateDetails.xml"/>
-                <include name="template_preview.png"/>
-                <include name="template_thumbnail.png"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="version" value="${VERSION}"/>
-                    <token key="date" value="${DATE}"/>
-                </replacetokens>
-            </filterchain>
-        </copy>
-
-        <!-- Folders -->
-        <copy todir="${build}">
-            <fileset dir=".">
                 <include name="assets/**"/>
                 <include name="css/**"/>
-                <include name="fonts/**"/>
                 <include name="html/**"/>
-                <include name="images/**"/>
                 <include name="js/**"/>
                 <include name="language/**"/>
                 <include name="svg/**"/>
@@ -55,6 +39,16 @@
                     <token key="date" value="${DATE}"/>
                 </replacetokens>
             </filterchain>
+        </copy>
+
+        <!-- Binary files: copied as-is, no filterchain (text-mode read corrupts binary) -->
+        <copy todir="${build}">
+            <fileset dir=".">
+                <include name="template_preview.png"/>
+                <include name="template_thumbnail.png"/>
+                <include name="fonts/**"/>
+                <include name="images/**"/>
+            </fileset>
         </copy>
     </target>
 

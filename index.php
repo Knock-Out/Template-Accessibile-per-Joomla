@@ -115,8 +115,7 @@ $wa->registerAndUseStyle('template.styles', $tplPath . '/css/bootstrap-italia.mi
    ->registerAndUseScript('template.scripts', $tplPath . '/js/bootstrap-italia.bundle.min.js', [], ['defer' => true]);
 
 if ((int) $params->get('mostra_feedback', 0) === 1
-    && $app->input->get('option') === 'com_content'
-    && $app->input->get('view') === 'article') {
+    && $app->input->get('option') === 'com_content') {
     $wa->registerAndUseScript('template.feedback', $tplPath . '/js/feedback-chiarezza.js', [], ['defer' => true]);
 }
 
@@ -471,10 +470,9 @@ $wa->addInlineStyle($inlineCss);
 		</div>
 	  </div>
 	  </main>
-	<?php // Widget Valutazione chiarezza pagina (C.SI.2.5) - solo su articoli e se abilitato ?>
+	<?php // Widget Valutazione chiarezza pagina (C.SI.2.5) - su tutte le pagine com_content ?>
 	<?php if ((int) $params->get('mostra_feedback', 0) === 1
-		&& $app->input->get('option') === 'com_content'
-		&& $app->input->get('view') === 'article') : ?>
+		&& $app->input->get('option') === 'com_content') : ?>
 		<?php echo LayoutHelper::render('accessibile.feedback-chiarezza'); ?>
 	<?php endif; ?>
 	<?php if ($this->countModules('bottom')) : ?>
@@ -495,6 +493,86 @@ $wa->addInlineStyle($inlineCss);
       </div>
 	</section>
 	  <?php endif; ?>
+
+<?php
+$faqId         = (int) $params->get('footer_faq');
+$contactsId    = (int) $params->get('footer_contacts');
+$phone         = trim((string) $params->get('footer_phone'));
+$appointmentId = (int) $params->get('footer_appointment_booking');
+$reportId      = (int) $params->get('footer_report');
+
+$showContatta  = $faqId || $contactsId || $phone || $appointmentId || $reportId;
+
+if ($showContatta) :
+    $faqUrl         = $faqId         ? Route::_('index.php?Itemid=' . $faqId)         : '';
+    $contactsUrl    = $contactsId    ? Route::_('index.php?Itemid=' . $contactsId)    : '';
+    $appointmentUrl = $appointmentId ? Route::_('index.php?Itemid=' . $appointmentId) : '';
+    $reportUrl      = $reportId      ? Route::_('index.php?Itemid=' . $reportId)      : '';
+endif;
+$tplSvg = $this->baseurl . '/templates/' . $this->template . '/svg/sprites.svg';
+?>
+<?php if ($showContatta) : ?>
+<div class="bg-grey-card" id="contatta-il-comune">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6 offset-lg-3 py-5">
+                <div class="cmp-contacts">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <h2 class="title-medium-2-semi-bold"><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_BLOCK_HEADING'); ?></h2>
+                            <ul class="contact-list p-0">
+                                <?php if ($faqUrl) : ?>
+                                <li>
+                                    <a class="list-item" href="<?php echo $faqUrl; ?>">
+                                        <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-help-circle"></use></svg>
+                                        <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_FAQ_TEXT'); ?></span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                <?php if ($contactsUrl) : ?>
+                                <li>
+                                    <a class="list-item" href="<?php echo $contactsUrl; ?>" data-element="contacts">
+                                        <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-mail"></use></svg>
+                                        <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_ASSISTANCE_TEXT'); ?></span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                <?php if ($phone) : ?>
+                                <li>
+                                    <a class="list-item" href="tel:<?php echo htmlspecialchars($phone, ENT_QUOTES, 'UTF-8'); ?>">
+                                        <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-hearing"></use></svg>
+                                        <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_PHONE_PREFIX'); ?> <?php echo htmlspecialchars($phone, ENT_QUOTES, 'UTF-8'); ?></span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                <?php if ($appointmentUrl) : ?>
+                                <li>
+                                    <a class="list-item" href="<?php echo $appointmentUrl; ?>" data-element="appointment-booking">
+                                        <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-calendar"></use></svg>
+                                        <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_APPOINTMENT_TEXT'); ?></span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
+                            <?php if ($reportUrl) : ?>
+                            <h2 class="title-medium-2-semi-bold mt-4"><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_PROBLEMS_HEADING'); ?></h2>
+                            <ul class="contact-list p-0">
+                                <li>
+                                    <a class="list-item" href="<?php echo $reportUrl; ?>">
+                                        <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-map-marker-circle"></use></svg>
+                                        <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_REPORT_TEXT'); ?></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
 
 <footer class="it-footer" id="footer">
       <div class="it-footer-main">
@@ -517,6 +595,26 @@ $wa->addInlineStyle($inlineCss);
 					</div>
 				  </a>
 				</div>
+				<?php if (!empty($socialLinks)) : ?>
+				<div class="it-socials d-none d-lg-flex ms-auto">
+					<span><?php echo Text::_('TPL_ACCESSIBILE_FOLLOW_US'); ?></span>
+					<ul class="d-flex flex-row gap-2 list-unstyled m-0">
+						<?php foreach ($socialLinks as $social) : ?>
+						<li>
+							<a href="<?php echo htmlspecialchars($social['url'], ENT_QUOTES, 'UTF-8'); ?>"
+							   target="_blank" rel="noopener noreferrer"
+							   class="text-white"
+							   aria-label="<?php echo htmlspecialchars($social['label'], ENT_QUOTES, 'UTF-8'); ?> - <?php echo Text::_('TPL_ACCESSIBILE_NEW_WINDOW'); ?>">
+								<svg class="icon icon-sm align-top" aria-hidden="true" style="fill: currentColor;">
+									<use xlink:href="<?= $this->baseurl ?>/templates/<?= $this->template ?>/svg/sprites.svg#<?php echo $social['icon']; ?>"></use>
+								</svg>
+								<span class="visually-hidden"><?php echo htmlspecialchars($social['label'], ENT_QUOTES, 'UTF-8'); ?></span>
+							</a>
+						</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<?php endif; ?>
             </div>
           </div>
 		  <?php if ($this->countModules('footer1')) : ?>

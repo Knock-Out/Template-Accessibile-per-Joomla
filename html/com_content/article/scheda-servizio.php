@@ -238,6 +238,13 @@ $document->addCustomTag('<script type="application/ld+json" data-element="metata
                                                             <span><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_WHO_NEEDS'); ?></span>
                                                         </a>
                                                     </li>
+                                                    <?php if (!empty($this->item->fulltext)) : ?>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#descrizione">
+                                                            <span><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_DESCRIPTION'); ?></span>
+                                                        </a>
+                                                    </li>
+                                                    <?php endif; ?>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="#how-to">
                                                             <span><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_HOW_TO'); ?></span>
@@ -294,6 +301,15 @@ $document->addCustomTag('<script type="application/ld+json" data-element="metata
                     <?php echo $cfVal('cf_a_chi_rivolto'); ?>
                 </div>
             </section>
+
+            <?php if (!empty($this->item->fulltext)) : ?>
+            <section class="it-page-section anchor-offset mb-30" id="description">
+                <h2 class="mb-3"><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_DESCRIPTION'); ?></h2>
+                <div class="richtext-wrapper lora" data-element="service-extended-description">
+                    <?php echo HTMLHelper::_('content.prepare', $this->item->fulltext, '', 'com_content.article'); ?>
+                </div>
+            </section>
+            <?php endif; ?>
 
             <section class="it-page-section anchor-offset mb-30" id="how-to">
                 <h2 class="mb-3"><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_HOW_TO'); ?></h2>
