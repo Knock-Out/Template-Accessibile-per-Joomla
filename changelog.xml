@@ -1,5 +1,32 @@
 <changelogs>
 <changelog>
+      <element>templateaccessibileperjoomla</element>
+      <type>template</type>
+      <version>1.0.15</version>
+      <addition>
+          <item><![CDATA[Blocco "Contatta il Comune" sopra il footer con data-element="contacts" e
+  data-element="appointment-booking", configurabile dalle opzioni del template (fieldset "contatta")]]></item>
+          <item><![CDATA[Layout categoria "Amministrazione" con data-element="management-category-link" e
+  sezione articoli in evidenza su sfondo grigio]]></item>
+          <item><![CDATA[Layout categoria "Vivere il Comune" con sezioni "Eventi in evidenza" e "Luoghi in
+  evidenza", card con badge calendario, bottoni data-element="live-button-events/locations"]]></item>
+          <item><![CDATA[Sezione "Descrizione" (fulltext) nella scheda servizio, posizionata dopo "A chi è
+  rivolto" e visibile nell'indice di pagina]]></item>
+          <item><![CDATA[Social "Seguici su" nel footer (riga logo), icone Bootstrap Italia accessibili su
+  sfondo scuro]]></item>
+          <item><![CDATA[Widget feedback chiarezza (C.SI.2.5) esteso a tutte le pagine com_content, non solo
+  agli articoli singoli]]></item>
+          <item><![CDATA[Supporto data-element="legal-notes" sul link note legali nel footer tramite
+  configurazione voce menu nel fieldset "valutazione"]]></item>
+      </addition>
+      <fix>
+          <item><![CDATA[fix(build): file binari (font WOFF2/TTF, immagini PNG) non più corrotti dal
+  filterchain Ant — copiati in task separato senza token replacement]]></item>
+          <item><![CDATA[fix(css): font-family "Titillium Web" senza virgolette ignorato dal browser — aggiunto
+   quoting corretto e fallback sans-serif]]></item>
+      </fix>
+  </changelog>
+<changelog>
         <element>templateaccessibileperjoomla</element>
         <type>template</type>
         <version>1.0.14</version>
