@@ -1,84 +1,233 @@
 # Custom field per gli articoli
 
-I custom field per gli articoli sono usati principalmente dal layout **Scheda Servizio** (`scheda-servizio`). Il layout non legge i dati direttamente dai nomi dei campi, ma tramite un sistema di **mapping**: l'admin crea i campi liberamente in Joomla, poi indica al template quale campo corrisponde a quale sezione.
+> **Modello Comuni** — Questa guida è specifica per i siti web dei Comuni italiani.
+
+I custom field (campi personalizzati) di Joomla servono ad aggiungere informazioni strutturate agli articoli, al di là del semplice testo dell'editor. Nel contesto del Modello Comuni, vengono usati per compilare le sezioni della **Scheda Servizio**: ogni sezione (es. "A chi è rivolto", "Come fare", "Quanto costa") corrisponde a un campo personalizzato.
 
 ---
 
-## Come funziona il sistema di mapping
+## Come funziona il sistema
 
-1. **Crei i custom field** in Joomla (con qualsiasi nome tu voglia)
-2. **Mappi i campi** nella scheda **Valutazione Comuni** delle impostazioni del template, nella sezione **Scheda Servizio**: per ogni sezione del layout selezioni il custom field corrispondente
+Il layout `scheda-servizio` del template non legge i contenuti direttamente dai campi per nome: usa un sistema di **mapping**. In pratica:
+
+1. **Crei i campi personalizzati** in Joomla (con i nomi che preferisci)
+2. **Mappi i campi** nella scheda "Valutazione Comuni" delle impostazioni del template: per ogni sezione della Scheda Servizio, selezioni il campo corrispondente
 3. **Compili i campi** negli articoli a cui assegni il layout `scheda-servizio`
 
----
-
-## Elenco dei custom field necessari per la Scheda Servizio
-
-Per ogni campo è indicato il tipo Joomla consigliato.
-
-| Campo nel template | Tipo Joomla consigliato | Contenuto |
-|-------------------|-------------------------|-----------|
-| `cf_stato` | Lista o Testo | Stato del servizio (es. `Attivo`, `Sospeso`, `In manutenzione`) |
-| `cf_a_chi_rivolto` | Editor | Testo HTML: a chi è rivolto il servizio |
-| `cf_come_fare` | Editor | Testo HTML: procedura per usufruire del servizio |
-| `cf_cosa_serve` | Editor | Testo HTML: documenti e requisiti necessari |
-| `cf_cosa_si_ottiene` | Editor | Testo HTML: cosa si ottiene al termine della procedura |
-| `cf_tempi_scadenze` | Editor | Testo introduttivo della sezione tempi e scadenze |
-| `cf_tempi_scadenze_lista` | Subform | Lista strutturata di scadenze (vedere sotto) |
-| `cf_quanto_costa` | Editor | Testo HTML: costi e modalità di pagamento |
-| `cf_accedi_online` | URL | Link diretto per accedere al servizio online |
-| `cf_accedi_online_testo` | Testo | Etichetta del pulsante di accesso online |
-| `cf_accedi_appuntamento` | URL | Link per prenotare un appuntamento |
-| `cf_condizioni` | Editor | Testo HTML: condizioni di servizio |
-| `cf_condizioni_file` | Media | File PDF delle condizioni di servizio |
-
-
-> TODO – inserire screenshot dell'elenco custom field in Joomla con i campi della Scheda Servizio visibili
+Questo sistema ti permette di rinominare i campi come vuoi, e di riutilizzare gli stessi campi in più layout senza vincoli.
 
 ---
 
-## Il campo Subform per i tempi e le scadenze (`cf_tempi_scadenze_lista`)
+## Prima di iniziare: crea un Gruppo di Campi
 
-Questo è il campo più complesso. È di tipo **Subform** (campo composto) e permette di aggiungere più righe di scadenze, ognuna con più sotto-campi.
+Joomla permette di raggruppare i campi personalizzati in "Gruppi di Campi" (visibili come schede nell'editor articolo). Prima di creare i singoli campi, crea un gruppo dedicato per tenerli organizzati.
 
-Ogni riga della subform può contenere:
+1. Vai su **Contenuti → Gruppi di campi → Nuovo**
+2. Nel campo **Titolo**, inserisci `Servizi - Modello Comuni`
+3. Nel campo **Contesto**, assicurati che sia impostato su `com_content.article` (campi per gli articoli)
+4. Salva
 
-| Sotto-campo | Tipo | Descrizione |
-|-------------|------|-------------|
-| Titolo | Testo | Nome della scadenza (es. "Presentazione domanda") |
-| Data | Calendario | Data specifica della scadenza |
-| Numero giorni/mesi | Text | Numero di giorni/mesi (alternativa alla data) |
-| Unità di misura | Testo | Unità del numero (es. `giorni`, `mesi`) |
-| Descrizione | Editor | Descrizione breve della scadenza |
+D'ora in poi, quando crei i campi singoli, puoi assegnarli a questo gruppo. Nell'editor articolo appariranno raggruppati in una scheda dedicata.
 
-Nel mapping del template dovrai selezionare gli elementi del subform.
+> *Screenshot — Backend "Gruppi di campi" con il gruppo "Servizi - Modello Comuni" creato e visibile nella lista*
 
-> TODO – inserire screenshot della configurazione di un campo Subform in Joomla con i sotto-campi elencati
+---
+
+## Elenco completo dei campi da creare
+
+Di seguito trovi tutti i campi necessari per la Scheda Servizio, con il tipo Joomla da usare per ciascuno.
+
+| Nome campo | Tipo Joomla | Categoria campo | Note |
+|------------|-------------|-----------------|------|
+| Stato | Testo | Servizi | Valore breve, es. "Attivo" |
+| A chi è rivolto | Editor | Servizi | Testo HTML |
+| Come fare | Editor | Servizi | Testo HTML |
+| Cosa serve | Editor | Servizi | Testo HTML |
+| Cosa si ottiene | Editor | Servizi | Testo HTML |
+| Tempi e scadenze | Editor | Servizi | Testo introduttivo della sezione |
+| Lista Tempistiche | Subform | **Tutti** | Vedi istruzioni speciali sotto |
+| Quanto costa | Editor | Servizi | Testo HTML |
+| Accesso online | URL | Servizi | Link al portale online |
+| Testo - Accesso Online | Testo | Servizi | Etichetta del pulsante |
+| Condizioni di servizio - Introduzione | Editor | Servizi | Testo HTML delle condizioni |
+| Condizioni di servizio - FILE | Document | Servizi | File PDF da allegare |
+| Prenota un appuntamento | URL | Servizi | Link alla prenotazione |
+
+I campi dentro la subform (Titolo, Data, ecc.) sono spiegati in una sezione separata.
+
+---
+
+## Come creare un campo di tipo Testo
+
+Usato per: **Stato**, **Testo - Accesso Online**
+
+1. Vai su **Contenuti → Campi → Nuovo**
+2. Nel campo **Titolo**, inserisci il nome del campo (es. `Stato`)
+3. Nel campo **Tipo**, seleziona **Testo**
+4. Nel campo **Gruppo**, seleziona **Servizi - Modello Comuni**
+5. Nel campo **Categoria**, seleziona la categoria **Servizi** (così il campo appare solo sugli articoli di quella categoria)
+6. Lascia le altre impostazioni ai valori predefiniti
+7. Clicca **Salva e chiudi**
+
+> *Screenshot — Backend "Nuovo campo" con il tipo "Testo" selezionato, il gruppo "Servizi - Modello Comuni" e la categoria "Servizi"*
+
+---
+
+## Come creare un campo di tipo Editor
+
+Usato per: **A chi è rivolto**, **Come fare**, **Cosa serve**, **Cosa si ottiene**, **Tempi e scadenze**, **Quanto costa**, **Condizioni di servizio - Introduzione**
+
+1. Vai su **Contenuti → Campi → Nuovo**
+2. Nel campo **Titolo**, inserisci il nome del campo (es. `A chi è rivolto`)
+3. Nel campo **Tipo**, seleziona **Editor**
+4. Nel campo **Gruppo**, seleziona **Servizi - Modello Comuni**
+5. Nel campo **Categoria**, seleziona **Servizi**
+6. Clicca **Salva e chiudi**
+
+Ripeti il processo per tutti gli altri campi di tipo Editor.
+
+> *Screenshot — Backend "Nuovo campo" con il tipo "Editor" selezionato*
+
+**Perché Editor e non Textarea?** Il tipo Editor apre l'editor visuale di Joomla (TinyMCE o simile), che permette di formattare il testo, inserire elenchi puntati, grassetti, corsivi, ecc. Per le sezioni della Scheda Servizio, questo è spesso necessario per strutturare le informazioni in modo chiaro.
+
+---
+
+## Come creare un campo di tipo URL
+
+Usato per: **Accesso online**, **Prenota un appuntamento**
+
+1. Vai su **Contenuti → Campi → Nuovo**
+2. Nel campo **Titolo**, inserisci il nome del campo (es. `Accesso online`)
+3. Nel campo **Tipo**, seleziona **URL**
+4. Nel campo **Gruppo**, seleziona **Servizi - Modello Comuni**
+5. Nel campo **Categoria**, seleziona **Servizi**
+6. Clicca **Salva e chiudi**
+
+---
+
+## Come creare un campo di tipo Document
+
+Usato per: **Condizioni di servizio - FILE**
+
+Il tipo Document permette di allegare un file (tipicamente un PDF) direttamente all'articolo. Il file viene caricato nel Media Manager di Joomla e il campo salva il percorso del file.
+
+1. Vai su **Contenuti → Campi → Nuovo**
+2. Nel campo **Titolo**, inserisci `Condizioni di servizio - FILE`
+3. Nel campo **Tipo**, seleziona **Document** (potrebbe chiamarsi "Documento" nella versione italiana)
+4. Nel campo **Gruppo**, seleziona **Servizi - Modello Comuni**
+5. Nel campo **Categoria**, seleziona **Servizi**
+6. Clicca **Salva e chiudi**
+
+> *Screenshot — Backend "Nuovo campo" con il tipo "Document" selezionato*
+
+**Come usarlo nell'articolo:** quando compili questo campo in un articolo, si aprirà il Media Manager. Carica il PDF (o selezionalo se già presente) e confermalo. Il template genererà un link scaricabile nella sezione "Condizioni di servizio" della Scheda Servizio.
+
+---
+
+## Come creare il campo Subform (Lista Tempistiche)
+
+Il campo Subform è il più complesso: è un campo che contiene altri campi al suo interno, formando una lista di righe. Ogni riga rappresenta una scadenza o un'informazione temporale. Il campo Subform stesso **deve avere Categoria impostata su "Tutti"** (non solo "Servizi") — in caso contrario i sotto-campi non vengono caricati correttamente.
+
+### Passo A: crea i sotto-campi della subform
+
+Prima di creare il campo Subform, devi creare i campi che compariranno all'interno di ogni riga. Questi campi sono speciali: nella scheda **Opzioni** devono avere la voce **Solo sottomodulo** impostata su **Sì**.
+
+Crea i seguenti campi (nell'ordine non importa, ma è utile crearli tutti prima del Subform):
+
+**Sotto-campo 1: Titolo**
+1. **Contenuti → Campi → Nuovo** → Tipo: **Testo**
+2. Titolo: `Titolo`, Gruppo: `Servizi - Modello Comuni`, Categoria: `Servizi`
+3. Scheda **Opzioni** → **Solo sottomodulo**: **Sì**
+4. Salva e chiudi
+
+**Sotto-campo 2: Data**
+1. **Contenuti → Campi → Nuovo** → Tipo: **Calendario**
+2. Titolo: `Data`, Gruppo: `Servizi - Modello Comuni`, Categoria: `Servizi`
+3. Scheda **Opzioni** → **Solo sottomodulo**: **Sì**
+4. Salva e chiudi
+
+**Sotto-campo 3: Numero giorni/mesi**
+1. **Contenuti → Campi → Nuovo** → Tipo: **Testo**
+2. Titolo: `Numero giorni/mesi`, Gruppo: `Servizi - Modello Comuni`, Categoria: `Servizi`
+3. Scheda **Opzioni** → **Solo sottomodulo**: **Sì**
+4. Salva e chiudi
+
+**Sotto-campo 4: Unità di misura**
+1. **Contenuti → Campi → Nuovo** → Tipo: **Testo**
+2. Titolo: `Unità di misura`, Gruppo: `Servizi - Modello Comuni`, Categoria: `Servizi`
+3. Scheda **Opzioni** → **Solo sottomodulo**: **Sì**
+4. Salva e chiudi
+
+**Sotto-campo 5: Descrizione**
+1. **Contenuti → Campi → Nuovo** → Tipo: **Editor**
+2. Titolo: `Descrizione`, Gruppo: `Servizi - Modello Comuni`, Categoria: `Servizi`
+3. Scheda **Opzioni** → **Solo sottomodulo**: **Sì**
+4. Salva e chiudi
+
+> *Screenshot — Backend di un sotto-campo con la scheda "Opzioni" aperta e il campo "Solo sottomodulo" impostato su "Sì"*
+
+### Passo B: crea il campo Subform
+
+Ora crea il campo Subform che conterrà i sotto-campi appena creati:
+
+1. Vai su **Contenuti → Campi → Nuovo**
+2. Nel campo **Titolo**, inserisci `Lista Tempistiche`
+3. Nel campo **Tipo**, seleziona **Subform** (potrebbe chiamarsi "Sottomodulo" nella versione italiana)
+4. Nel campo **Gruppo**, seleziona **Servizi - Modello Comuni**
+5. Nel campo **Categoria**, seleziona **Tutti** (importante: non "Servizi" — il campo Subform deve essere visibile in tutti i contesti per caricare correttamente i sotto-campi)
+
+6. Nella scheda **Opzioni** del Subform troverai le impostazioni per aggiungere i sotto-campi. Seleziona i 5 sotto-campi creati nel Passo A:
+   - Titolo
+   - Data
+   - Numero giorni/mesi
+   - Unità di misura
+   - Descrizione
+
+7. Abilita l'opzione **Ripetibile** o **Aggiungibile** (il nome esatto dipende dalla versione di Joomla) — questo permette di aggiungere più righe nella lista
+8. Clicca **Salva e chiudi**
+
+> *Screenshot — Backend "Nuovo campo" di tipo Subform, con i sotto-campi selezionati e l'opzione "Ripetibile" abilitata*
+
+**Come usarlo nell'articolo:** nell'editor di un articolo con layout Scheda Servizio, il campo "Lista Tempistiche" mostrerà un pulsante per aggiungere righe. Per ogni scadenza, clicca "Aggiungi riga" e compila Titolo, Data (o Numero giorni/mesi + Unità di misura) e Descrizione.
 
 ---
 
 ## Come mappare i campi nel template
 
-Dopo aver creato i campi:
+Dopo aver creato tutti i campi, devi collegare ciascun campo alla sezione corrispondente della Scheda Servizio nelle impostazioni del template.
 
-1. Vai su **Estensioni → Template → Stili** → modifica lo stile del template
-2. Scheda **Valutazione Comuni** → sezione **Scheda Servizio**
-3. Per ogni riga, seleziona dal menu a tendina il custom field corrispondente
+1. Vai su **Estensioni → Template → Stili** e clicca sul nome del template
+2. Clicca sulla scheda **Valutazione Comuni**
+3. Scorri fino alla sezione **Scheda Servizio**
+4. Per ogni riga della sezione, clicca sul menu a tendina e seleziona il campo corrispondente:
+   - "Campo per lo Stato" → seleziona **Stato**
+   - "Campo A chi è rivolto" → seleziona **A chi è rivolto**
+   - "Campo Come fare" → seleziona **Come fare**
+   - ... e così via per tutti i campi
+5. Per i sotto-campi del Subform:
+   - "Campo Subform per le tempistiche" → seleziona **Lista Tempistiche**
+   - "Campo Titolo (nel subform)" → seleziona **Titolo**
+   - "Campo Data (nel subform)" → seleziona **Data**
+   - "Campo Numero (nel subform)" → seleziona **Numero giorni/mesi**
+   - "Campo Unità (nel subform)" → seleziona **Unità di misura**
+   - "Campo Descrizione (nel subform)" → seleziona **Descrizione**
+6. Clicca **Salva**
 
-> TODO – inserire screenshot della sezione "Scheda Servizio" nel backend del template con i dropdown compilati
+> *Screenshot — Sezione "Scheda Servizio" nella scheda "Valutazione Comuni" del template, con tutti i dropdown compilati*
 
 ---
 
-## Come compilare i campi su un articolo
+## Come appare il campo nell'editor articolo
 
-Quando apri un articolo in modifica, sotto l'area editor troverai i custom field raggruppati. Compila i valori per ogni sezione del servizio.
+Una volta creati e mappati i campi, quando apri un articolo in modifica troverai una nuova scheda nell'editor (con il nome del gruppo "Servizi - Modello Comuni"). Questa scheda contiene tutti i campi che hai creato, pronti per essere compilati.
 
-> TODO – inserire screenshot di un articolo in modifica con i custom field della Scheda Servizio visibili sotto l'editor
+> *Screenshot — Editor articolo con la scheda "Servizi - Modello Comuni" aperta, che mostra tutti i campi personalizzati (Stato, A chi è rivolto, Come fare, ecc.)*
 
 ---
 
 ## Note
 
-- I custom field mostrano nel frontend solo se hanno un valore. Le sezioni vuote non vengono renderizzate dalla scheda servizio.
-- Il campo `cf_stato` viene visualizzato come badge (es. "Attivo") nella hero del servizio.
-- Non è obbligatorio compilare tutti i campi per ogni servizio, ma il validatore del Modello Comuni richiede che le sezioni principali abbiano contenuto (min. 3 caratteri).
+- I campi mostrano il loro contenuto nel frontend solo se compilati. Le sezioni della Scheda Servizio con campo vuoto non vengono renderizzate — non viene mostrato nemmeno il titolo della sezione.
+- Il campo **Stato** viene visualizzato come badge nell'intestazione della scheda servizio (es. "Attivo", "In manutenzione", "Sospeso").
+- Il validatore del Modello Comuni richiede che le sezioni principali abbiano contenuto di almeno 3 caratteri. Un campo compilato con solo uno spazio non supererebbe la verifica.
+- I campi creati qui appaiono solo negli articoli della categoria **Servizi** (o di tutte le categorie, per il Subform). Non compaiono negli articoli di altre categorie.

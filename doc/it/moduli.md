@@ -1,85 +1,107 @@
 # Posizioni modulo
 
-Il template definisce le seguenti posizioni modulo. Per assegnare un modulo a una posizione, usare il campo **Posizione** nella scheda **Avanzate** del modulo.
+Il template definisce una serie di posizioni fisse dove puoi inserire i moduli Joomla. Ogni posizione corrisponde a un'area specifica della pagina.
 
-> TODO – inserire screenshot del Gestore Moduli con la lista delle posizioni visibile nel filtro
+Per assegnare un modulo a una posizione, apri il modulo in modifica e vai nella scheda **Avanzate** → campo **Posizione modulo**.
+
+> *Screenshot — Backend di un modulo, scheda "Avanzate", con il campo "Posizione modulo" evidenziato e il valore "top" selezionato*
 
 ---
 
 ## Mappa delle posizioni
 
-### Nella topbar
-| Posizione | Descrizione |
-|-----------|-------------|
-| `selezione-lingua` | Area destra della banda slim superiore. Usata tipicamente per `mod_languages` su siti multilingua. |
+### Topbar (banda slim superiore)
 
-### Nell'header (navbar)
-| Posizione | Descrizione |
-|-----------|-------------|
-| `menu-principale` | Menu di navigazione principale. **Obbligatorio il layout `comuni-menu`**. |
-| `menu-secondario` | Menu di navigazione secondario. **Obbligatorio il layout `comuni-menu`**. |
+| Posizione | Area nella pagina | Uso tipico |
+|-----------|-------------------|------------|
+| `selezione-lingua` | Destra della banda slim | Modulo cambio lingua (`mod_languages`) per siti multilingua |
 
-### Subito dopo la navbar
-| Posizione | Descrizione |
-|-----------|-------------|
-| `percorso` | Breadcrumb (percorso di navigazione). Usare `mod_breadcrumbs` con il layout override incluso nel template. |
+### Header — Navbar
+
+| Posizione | Area nella pagina | Uso tipico |
+|-----------|-------------------|------------|
+| `menu-principale` | Navbar a sinistra | Menu di navigazione principale — **obbligatorio il layout `comuni-menu`** |
+| `menu-secondario` | Navbar a destra | Menu di navigazione secondario — **obbligatorio il layout `comuni-menu`** |
+
+### Breadcrumb (percorso di navigazione)
+
+| Posizione | Area nella pagina | Uso tipico |
+|-----------|-------------------|------------|
+| `percorso` | Sotto la navbar, sopra il contenuto | Modulo breadcrumb (`mod_breadcrumbs`) |
+
+**Nota sul breadcrumb:** il template include un override del modulo `mod_breadcrumbs` che applica automaticamente la struttura Bootstrap Italia. Basta assegnare il modulo alla posizione `percorso` — non è necessario selezionare un layout alternativo.
 
 ### Area contenuto principale
-| Posizione | Descrizione |
-|-----------|-------------|
-| `top` | Sezione sopra il contenuto principale, sfondo bianco. |
-| `top-muted` | Sezione sopra il contenuto principale, sfondo grigio chiaro. |
-| `evidenza` | Sezione hero/evidenza con sfondo dinamico (immagine che cambia in base al colore primario). |
-| `calendario` | Area per eventi o calendari, posizionata dopo `evidenza`. |
-| `colonna-sinistra` | Sidebar sinistra del contenuto principale (affiancata all'area `<main>`). |
-| `colonna-destra` | Sidebar destra del contenuto principale (affiancata all'area `<main>`). |
-| `bottom` | Sezione dopo il contenuto principale. |
-| `bottom2` | Seconda sezione dopo il contenuto principale. |
 
-### Nel footer
-| Posizione | Descrizione |
-|-----------|-------------|
-| `footer1` | Prima colonna del footer. |
-| `footer2` | Seconda colonna del footer. |
+Queste posizioni si trovano attorno all'area principale della pagina (la parte che cambia in base alla voce di menu).
 
-### Nei layout di categoria Servizi
-| Posizione | Descrizione |
-|-----------|-------------|
-| `cerca-servizi` | Area ricerca integrata nel layout categoria Servizi, posizionata sopra la lista degli articoli. |
+| Posizione | Area nella pagina | Sfondo | Uso tipico |
+|-----------|-------------------|--------|------------|
+| `evidenza` | Sopra il contenuto, sfondo colorato | Immagine + colore primario | Hero/carosello con articoli in evidenza |
+| `top` | Sotto `evidenza`, sopra il contenuto | Bianco | Contenuto in evidenza, link rapidi |
+| `top-muted` | Sotto `top`, sopra il contenuto | Grigio chiaro | Sezioni di supporto |
+| `calendario` | Sotto `evidenza` | Bianco | Moduli calendario o eventi |
+| `colonna-sinistra` | Sidebar sinistra del contenuto | — | Indice della pagina, filtri |
+| `colonna-destra` | Sidebar destra del contenuto | — | Widget correlati, link rapidi |
+| `bottom` | Sotto il contenuto principale | Blu scuro | Call to action, link istituzionali |
+| `bottom2` | Sotto `bottom` | Grigio chiaro | Contenuto supplementare |
+
+### Footer
+
+| Posizione | Area nella pagina | Uso tipico |
+|-----------|-------------------|------------|
+| `footer1` | Prima colonna del footer (sinistra) | Logo e testo istituzionale, menu |
+| `footer2` | Seconda colonna del footer (destra) | Link rapidi, contatti, link istituzionali |
+
+### Layout categoria Servizi (solo Modello Comuni)
+
+| Posizione | Area nella pagina | Uso tipico |
+|-----------|-------------------|------------|
+| `cerca-servizi` | Sopra la lista servizi | Modulo Smart Search filtrato alla categoria Servizi |
+
+Questa posizione appare solo all'interno del layout categoria `servizi`. Se nessun modulo è pubblicato in `cerca-servizi`, l'area non viene mostrata.
 
 ---
 
-## Layout alternativi per i moduli articoli (`mod_articles`)
+## Layout alternativi per il modulo Articoli (`mod_articles`)
 
-Il template include due layout alternativi per il modulo **Articoli Correlati** (`mod_articles`):
+Il template include due layout grafici alternativi per il modulo **mod_articles** (che si chiama "Articoli" nella lista moduli di Joomla). Questi layout permettono di mostrare articoli in evidenza con formati diversi.
 
-### `evidenza-singolo`
+### Come assegnare un layout alternativo
 
-Mostra un singolo articolo in evidenza. Se il modulo ha più articoli configurati, genera automaticamente un **carosello accessibile** con navigazione a frecce e indicatori.
+1. Apri il modulo `mod_articles` in modifica
+2. Vai nella scheda **Avanzate**
+3. Nel campo **Layout alternativo**, seleziona il layout desiderato
 
-**Uso tipico:** assegnato alla posizione `evidenza` come slideshow di notizie o servizi in primo piano.
+> *Screenshot — Scheda "Avanzate" del modulo Articoli, con il campo "Layout alternativo" espanso e i layout del template visibili nell'elenco*
 
-> TODO – inserire screenshot del layout `evidenza-singolo` con un singolo articolo e con il carosello attivo su più articoli
+### Layout: `evidenza-singolo`
 
-### `evidenza-tre-colonne`
+**Cosa fa:** mostra un singolo articolo in evidenza, in formato "hero" con immagine grande, titolo e testo introduttivo.
 
-Mostra fino a 3 articoli affiancati in una griglia a 3 colonne (si adatta su mobile).
+**Comportamento speciale:** se il modulo ha configurato più di un articolo, genera automaticamente un **carosello accessibile** con frecce di navigazione e indicatori circolari. Il carosello scorre automaticamente ogni pochi secondi ed è navigabile da tastiera.
 
-**Uso tipico:** assegnato a `top`, `bottom` o `evidenza` per presentare le sezioni principali del sito.
+**Uso tipico:** assegnato alla posizione `evidenza` come slideshow degli articoli principali del sito (notizie in primo piano, iniziative speciali, ecc.).
 
-> TODO – inserire screenshot del layout `evidenza-tre-colonne` con 3 articoli
+> *Screenshot — Posizione "evidenza" con il layout `evidenza-singolo` attivo: un singolo articolo grande, poi lo stesso con carosello su più articoli*
 
-### Come assegnare un layout alternativo a un modulo
+### Layout: `evidenza-tre-colonne`
 
-1. Modifica il modulo `mod_articles`
-2. Nella scheda **Avanzate** → **Layout alternativo**: seleziona `evidenza-singolo` oppure `evidenza-tre-colonne`
+**Cosa fa:** mostra fino a 3 articoli affiancati in una griglia a 3 colonne. Su tablet si riduce a 2 colonne, su mobile a 1 colonna.
 
-> TODO – inserire screenshot della scheda Avanzate del modulo con il campo Layout alternativo evidenziato
+**Uso tipico:** assegnato a `top`, `bottom` o `evidenza` per presentare le sezioni principali del sito o le ultime notizie in una griglia ordinata.
+
+> *Screenshot — Layout `evidenza-tre-colonne` con 3 card articolo affiancate*
 
 ---
 
 ## Layout alternativo per il breadcrumb (`mod_breadcrumbs`)
 
-Il template include un override del modulo breadcrumb che applica la struttura Bootstrap Italia. Non è necessario selezionare manualmente un layout alternativo: l'override è applicato automaticamente.
+Il template include un override automatico per il modulo `mod_breadcrumbs`. Questo override applica la struttura HTML e le classi CSS di Bootstrap Italia al breadcrumb.
 
-Assegna il modulo `mod_breadcrumbs` alla posizione `percorso` e verrà usato l'override incluso nel template.
+**Non è necessario** selezionare manualmente nessun layout alternativo. Basta:
+1. Creare un modulo di tipo **Percorso di navigazione** (`mod_breadcrumbs`)
+2. Assegnarlo alla posizione `percorso`
+3. Pubblicarlo
+
+L'override verrà applicato automaticamente.

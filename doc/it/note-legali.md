@@ -1,56 +1,83 @@
-# Note Legali (C.SI.3.4)
+# Pagina Note Legali (C.SI.3.4)
 
-La pagina Note Legali è obbligatoria per la conformità al Modello Comuni (criterio C.SI.3.4). Il template fornisce un layout dedicato che aggiunge automaticamente il testo della licenza CC-BY 4.0.
+La pagina Note Legali è obbligatoria per la conformità al Modello Comuni (criterio C.SI.3.4). Il template fornisce un layout dedicato che aggiunge automaticamente il testo della licenza Creative Commons BY 4.0 in italiano.
+
+---
+
+## Cosa fa questo layout
+
+Quando assegni il layout `note-legali` a un articolo, il template:
+
+1. Mostra il titolo dell'articolo
+2. Mostra il contenuto che hai scritto nell'articolo (introtext e testo completo) — puoi usarlo per note legali specifiche del tuo ente
+3. Aggiunge automaticamente in fondo una sezione "Licenza dei contenuti" con il testo completo obbligatorio della licenza CC-BY 4.0 in italiano
+
+Il testo della sezione "Licenza dei contenuti" è **fisso nel template** e non può essere modificato dall'editor. Questo garantisce che il testo ufficiale richiesto dal Modello Comuni non venga alterato accidentalmente.
+
+La sezione aggiunta ha l'attributo `data-element="legal-notes"`, verificato automaticamente dall'App Valutazione Modelli.
 
 ---
 
 ## Come creare la pagina Note Legali
 
-### 1. Crea l'articolo
+### Passo 1 — Crea l'articolo
 
-Vai su **Contenuti → Articoli → Nuovo** e inserisci il contenuto aggiuntivo della pagina (es. note sul copyright, limitazioni d'uso, riferimenti normativi specifici dell'ente). Questo contenuto appare **prima** della sezione licenza.
+1. Vai su **Contenuti → Articoli → Nuovo**
+2. Nel campo **Titolo**, inserisci `Note Legali`
+3. Nel campo **Alias**, puoi lasciare quello generato automaticamente (`note-legali`) o personalizzarlo
+4. Nel campo **Categoria**, scegli una categoria appropriata (es. "Pagine istituzionali" — una categoria generica per le pagine di servizio del sito)
+5. Nell'editor, puoi aggiungere contenuto aggiuntivo specifico del tuo ente: note sul copyright, limitazioni d'uso, riferimenti normativi specifici, ecc. Questo contenuto apparirà **prima** della sezione licenza CC-BY 4.0.
+6. Se non hai contenuto aggiuntivo da inserire, puoi lasciare l'editor vuoto — apparirà solo la sezione "Licenza dei contenuti"
 
-È possibile lasciare l'articolo vuoto se si vuole mostrare solo il testo obbligatorio.
+### Passo 2 — Assegna il layout `note-legali`
 
-### 2. Assegna il layout alternativo `note-legali`
+1. Nell'editor dell'articolo, clicca sulla scheda **Opzioni**
+2. Trova il campo **Layout alternativo**
+3. Nel menu a tendina, seleziona `note-legali`
 
-Nella scheda **Opzioni** dell'articolo → campo **Layout alternativo** → seleziona `note-legali`.
+> *Screenshot — Scheda "Opzioni" dell'articolo con il campo "Layout alternativo" che mostra "note-legali" selezionato*
 
-> TODO – inserire screenshot della scheda Opzioni con il layout `note-legali` selezionato
+### Passo 3 — Pubblica l'articolo
 
-### 3. Pubblica l'articolo
+1. Imposta lo **Stato** su *Pubblicato*
+2. Clicca **Salva e chiudi**
 
-Assegna una categoria appropriata (es. "Pagine Istituzionali") e pubblica.
+### Passo 4 — Crea la voce di menu
 
-### 4. Crea la voce di menu
+Per rendere la pagina raggiungibile, crea una voce di menu che punta all'articolo:
 
-Crea una voce di menu che punta all'articolo (tipo **Articoli → Articolo singolo**) e inseriscila nel footer del sito (vedere [footer.md](footer.md)).
+1. Vai su **Menu → [il tuo menu del footer] → Aggiungi voce di menu**
+2. In **Tipo voce di menu**, seleziona **Articoli → Articolo singolo**
+3. Nel campo **Articolo**, seleziona l'articolo "Note Legali" appena creato
+4. Nel campo **Titolo voce di menu**, inserisci `Note Legali`
+5. Salva
 
-> TODO – inserire screenshot della voce di menu creata nel footer
+Questa voce di menu va inserita nel footer del sito. Se non hai ancora un menu per il footer, creane uno e assegnalo alla posizione `footer1` o `footer2` (vedi [footer.md](footer.md) e [menu.md](menu.md)).
+
+> *Screenshot — Backend della gestione voci di menu, con la voce "Note Legali" che punta all'articolo corretto*
 
 ---
 
-## Cosa aggiunge il layout automaticamente
+## Come appare la pagina sul frontend
 
-Il layout `note-legali.php` appende in fondo all'articolo una sezione con `data-element="legal-notes"` contenente:
+Dopo la configurazione, la pagina Note Legali mostrerà:
 
-- L'intestazione **"Licenza dei contenuti"**
-- Il testo completo della licenza **Creative Commons BY 4.0** in italiano
+1. **Titolo**: "Note Legali" (il titolo dell'articolo)
+2. **Corpo**: il contenuto che hai inserito nell'editor (se presente)
+3. **Sezione aggiunta automaticamente** con intestazione "Licenza dei contenuti" e il testo CC-BY 4.0
 
-Il testo della licenza è fisso nel template e **non può essere modificato dall'editor** tramite il backend. Questo garantisce che il testo ufficiale CC-BY 4.0 richiesto dal Modello Comuni non venga alterato.
-
-> TODO – inserire screenshot della pagina Note Legali renderizzata con la sezione "Licenza dei contenuti" visibile
+> *Screenshot — Pagina Note Legali sul frontend con la sezione "Licenza dei contenuti" visibile in fondo*
 
 ---
 
 ## Mapping per la valutazione automatica
 
-Il `data-element="legal-notes"` viene verificato dall'App Valutazione Modelli (Dipartimento per la Trasformazione Digitale). Il layout lo emette automaticamente: non è necessaria nessuna configurazione aggiuntiva.
+Il `data-element="legal-notes"` viene verificato dall'App Valutazione Modelli. Il layout lo emette automaticamente: non è necessaria nessuna configurazione aggiuntiva nella scheda "Valutazione Comuni" del template.
 
 ---
 
 ## Note
 
+- Crea **una sola** pagina Note Legali per sito.
 - Il layout non richiede custom fields.
-- Creare una sola pagina Note Legali per sito.
-- Il corpo dell'articolo (introtext e fulltext) è ancora disponibile per contenuto aggiuntivo specifico dell'ente.
+- Se vuoi linkare la pagina Note Legali nel footer, ricordati di farlo anche nella scheda **Valutazione Comuni** del template nel campo `de_legal_notes` (vedi [valutazione-modelli.md](valutazione-modelli.md)).

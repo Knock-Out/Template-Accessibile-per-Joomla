@@ -1,69 +1,86 @@
 # Layout Categoria Notizie
 
-Il layout `notizie` è un override del layout blog per le categorie, pensato per la sezione notizie/comunicati stampa del comune.
+> **Modello Comuni** — Questa guida è specifica per i siti web dei Comuni italiani.
+
+Il layout `notizie` è il layout specializzato per la sezione **Novità** del Modello Comuni. Mostra le notizie più recenti, con una sezione in cima dedicata agli articoli "in evidenza".
+
+---
+
+## Cosa fa questo layout
+
+La pagina generata da questo layout è strutturata così, dall'alto verso il basso:
+
+1. **Hero** — titolo della categoria, descrizione e tag (se presenti e configurati)
+2. **Sezione "In evidenza"** *(solo sulla prima pagina, se abilitata)* — articoli marcati come "In evidenza" della categoria, ordinati dalla data più recente
+3. **Sezione "Esplora tutte le novità"** — lista di tutti gli articoli con paginazione, sempre visibile
+4. **Sezione "Esplora per categoria"** *(solo se la categoria ha sottocategorie)* — link alle sottocategorie (es. Notizie, Comunicati, Avvisi)
 
 ---
 
 ## Come attivare il layout
 
-Il layout si seleziona sulla **voce di menu** che punta alla categoria Notizie:
+Il layout si assegna alla **voce di menu** che punta alla categoria, non alla categoria stessa.
 
-1. Crea o modifica una voce di menu di tipo **Articoli → Blog categoria**
-2. Seleziona la categoria Notizie
-3. Nella scheda **Layout** (o **Blog Layout**) → campo **Layout alternativo**: seleziona `notizie`
-4. Salva
+Puoi assegnare questo layout sia alla categoria radice **Novità** che a una sottocategoria specifica come **Notizie**, **Comunicati** o **Avvisi**.
 
-> TODO – inserire screenshot della scheda "Layout" della voce di menu con `notizie` selezionato
+1. Vai su **Menu → [il tuo menu] → Aggiungi voce di menu**
+2. In **Tipo voce di menu**, seleziona **Articoli → Blog categoria**
+3. Nel campo **Categoria**, seleziona la categoria desiderata (es. `Novità` oppure `Notizie`)
+4. Clicca sulla scheda **Tipo di layout** (o "Layout")
+5. Nel campo **Layout alternativo**, seleziona **Notizie (Modello PA)**
+6. Salva
+
+> *Screenshot — Scheda "Tipo di layout" della voce di menu, con il campo "Layout alternativo" impostato su "Notizie (Modello PA)"*
 
 ---
 
-## Struttura della pagina
+## Parametri configurabili
 
-### Hero
-
-In cima viene visualizzato:
-- Titolo della categoria
-- Descrizione della categoria (se presente)
-- Tag della categoria (se abilitati)
-
-### Sezione "In Evidenza" (solo pagina 1)
-
-La prima pagina del layout mostra una sezione "In Evidenza" con le notizie marcate come **In Evidenza** (`featured = 1`), ordinate dalla più recente.
-
-Questa sezione è configurabile:
+Nella stessa voce di menu, alla scheda **Opzioni layout Notizie**, trovi i parametri specifici di questo layout:
 
 | Parametro | Descrizione | Default |
 |-----------|-------------|---------|
-| Mostra notizie in evidenza | Abilita/disabilita la sezione | Sì |
-| Numero notizie in evidenza | Quante notizie mostrare (1–12) | 3 |
+| Mostra sezione «In evidenza» | Se Sì, mostra la sezione con le notizie in evidenza in cima (solo pagina 1) | Sì |
+| Numero notizie in evidenza | Quante notizie in evidenza mostrare (da 1 a 12) | 3 |
 
-**Dove si configurano questi parametri:**
+Il campo **Numero notizie in evidenza** è visibile solo se **Mostra sezione «In evidenza»** è impostato su Sì.
 
-Nella voce di menu che usa il layout `notizie` → scheda **Opzioni** o **Layout** → cerca i parametri specifici del layout notizie.
+**Come configurarli:**
+1. Modifica la voce di menu della categoria Notizie
+2. Clicca sulla scheda **Opzioni layout Notizie**
+3. Modifica i valori
+4. Salva
 
-> TODO – inserire screenshot della scheda con i parametri "Mostra notizie in evidenza" e "Numero notizie in evidenza"
-
-### Sezione "Esplora tutte le novità"
-
-Lista di tutti gli articoli della categoria con paginazione. La sezione è sempre visibile, indipendentemente dai parametri.
-
-### Sezione "Esplora per categoria" (sottocategorie)
-
-Se la categoria ha sottocategorie e i livelli sono configurati, appare una sezione con i link alle sottocategorie.
+> *Screenshot — Scheda "Opzioni layout Notizie" con i due parametri visibili*
 
 ---
 
-## Come marcare una notizia come "In Evidenza"
+## Come popolare la sezione "In evidenza"
 
-- Dalla lista articoli: clicca la stella nella colonna **In Evidenza**
-- Dall'editor articolo: scheda **Pubblicazione** → campo **In Evidenza** = Sì
+La sezione "In evidenza" mostra automaticamente gli articoli marcati come "In evidenza" (`featured = 1`) della categoria associata alla voce di menu. Gli articoli vengono ordinati per **data di pubblicazione decrescente** (le notizie più recenti prima).
 
-> TODO – inserire screenshot della lista articoli con la colonna "In Evidenza"
+**Come marcare una notizia come "In evidenza":**
+- Dalla lista articoli (**Contenuti → Articoli**): clicca la stella nella colonna **In Evidenza**
+- Oppure dall'editor articolo: scheda **Pubblicazione** → campo **In Evidenza**: **Sì**
+
+> *Screenshot — Lista articoli con la colonna "In Evidenza" e alcune stelle piene*
+
+**Attenzione:** la sezione "In evidenza" appare **solo sulla prima pagina** della paginazione. Se l'utente va alle pagine successive, la sezione non viene ripetuta.
 
 ---
 
-## Note
+## Come funzionano le sottocategorie
 
-- La sezione "In Evidenza" appare solo sulla **prima pagina** del layout (non sulle pagine successive della paginazione).
-- Le notizie in evidenza sono ordinate per data di pubblicazione decrescente (le più recenti prima).
-- Il layout non genera `data-element` specifici per le notizie (a differenza del layout Servizi): non è richiesta dalla specifica Modello Comuni.
+Se la categoria associata alla voce di menu ha sottocategorie (es. la categoria "Novità" ha le sottocategorie "Notizie", "Comunicati", "Avvisi"), il layout mostra automaticamente in fondo alla pagina una sezione con i link alle sottocategorie.
+
+Non serve nessuna configurazione: basta che le sottocategorie esistano e siano pubblicate.
+
+> *Screenshot — Fondo della pagina Novità con la sezione "Esplora per categoria" che mostra Notizie, Comunicati, Avvisi*
+
+---
+
+## Nota sui data-element
+
+A differenza del layout Servizi, il layout Notizie non emette `data-element` specifici sulle singole card delle notizie: il Modello Comuni non richiede attributi particolari per gli articoli di notizie individuali.
+
+Il layout emette però `data-element` sulle sottocategorie (se presenti), per soddisfare eventuali requisiti di navigazione.

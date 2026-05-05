@@ -1,31 +1,37 @@
 # Inserimento articoli
 
-Gli articoli in Joomla si creano da **Contenuti → Articoli → Nuovo**. Il template fornisce layout alternativi specifici per alcuni tipi di contenuto.
+Gli articoli in Joomla si creano da **Contenuti → Articoli → Nuovo**. Il template fornisce layout grafici specializzati per alcuni tipi di contenuto, selezionabili articolo per articolo.
 
 ---
 
 ## Articolo standard
 
-Per contenuti generici (pagine istituzionali, comunicati, ecc.) non è necessario selezionare alcun layout alternativo. Il template applica automaticamente l'override `default.php` che include:
+Per contenuti generici (pagine istituzionali, comunicati stampa, annunci, ecc.) non è necessario selezionare nessun layout alternativo. Quando non specifichi un layout, il template applica automaticamente il suo layout standard (`default.php`).
 
-- Calcolo e visualizzazione del tempo di lettura stimato
-- Indice di pagina con scrollspy (se l'articolo ha sottotitoli con ID)
-- Pulsanti di condivisione social (Facebook, X, LinkedIn, WhatsApp)
-- Pulsanti stampa e invia via email
-- Widget feedback chiarezza (se abilitato nei parametri del template)
-- Paginazione accessibile tra articoli della stessa categoria
+Il layout standard include automaticamente queste funzionalità:
 
-> TODO – inserire screenshot di un articolo standard renderizzato con il template
+- **Tempo di lettura stimato** — calcolato automaticamente in base alla lunghezza del testo (es. "5 minuti di lettura")
+- **Indice di pagina con scrollspy** — se l'articolo contiene sottotitoli (H2, H3), viene generato un indice laterale navigabile che evidenzia la sezione corrente durante lo scroll. L'attributo `data-element="page-index"` viene emesso automaticamente.
+- **Pulsanti di condivisione social** — Facebook, X (Twitter), LinkedIn, WhatsApp. Presenti nella sidebar destra dell'articolo.
+- **Pulsanti stampa e invia via email** — nella stessa sidebar destra.
+- **Widget feedback chiarezza** — appare in fondo all'articolo se abilitato nelle impostazioni del template (vedi [valutazione-modelli.md](valutazione-modelli.md)).
+- **Paginazione** — se l'articolo fa parte di una categoria, possono comparire link all'articolo precedente e successivo.
+
+> *Screenshot — Articolo standard renderizzato con il template: header articolo, sidebar destra con social, indice di pagina a sinistra, corpo del testo*
 
 ---
 
 ## Come selezionare un layout alternativo
 
-1. Vai su **Contenuti → Articoli → Modifica** (o Nuovo)
-2. Nella scheda **Opzioni** del singolo articolo
-3. Campo **Layout alternativo**: seleziona il layout desiderato
+Se vuoi applicare uno dei layout specializzati del template (Scheda Servizio o Note Legali) a un articolo:
 
-> TODO – inserire screenshot della scheda Opzioni con il campo "Layout alternativo" evidenziato
+1. Vai su **Contenuti → Articoli** e apri l'articolo in modifica (oppure crea un nuovo articolo)
+2. Nella scheda **Opzioni** (la trovi tra le schede in basso sotto l'editor)
+3. Trova il campo **Layout alternativo**
+4. Clicca sul menu a tendina e seleziona il layout desiderato
+5. Salva l'articolo
+
+> *Screenshot — Editor articolo con la scheda "Opzioni" aperta e il campo "Layout alternativo" evidenziato, con il menu a tendina che mostra le opzioni disponibili*
 
 ---
 
@@ -33,38 +39,58 @@ Per contenuti generici (pagine istituzionali, comunicati, ecc.) non è necessari
 
 ### `scheda-servizio` — Scheda Servizio
 
-Per gli articoli che descrivono un servizio erogato dal comune. Richiede la creazione e il mapping di custom fields specifici.
+Usato per gli articoli che descrivono i servizi del comune. Richiede la creazione e configurazione di campi personalizzati (custom fields).
 
-**Quando usarlo:** ogni articolo dentro la categoria Servizi che deve essere conforme al criterio C.SI.1.3 del Modello Comuni.
+**Quando usarlo:** per ogni articolo nella categoria Servizi che deve essere conforme al criterio C.SI.1.3 del Modello Comuni.
 
-Vedere la guida completa: [scheda-servizio.md](scheda-servizio.md)
+**Cosa genera:** una pagina strutturata con titolo, badge di stato, indice di pagina laterale, 9 sezioni fisse con i contenuti del servizio, pulsanti di accesso, e blocco JSON-LD per i motori di ricerca.
 
-### `note-legali` — Note Legali
+Per la guida completa con tutti i passaggi: [scheda-servizio.md](scheda-servizio.md).
 
-Per la pagina delle note legali obbligatoria (criterio C.SI.3.4).
+> *Screenshot — Esempio di Scheda Servizio completa con hero, indice laterale e sezioni dei contenuti*
 
-**Cosa fa:** appende automaticamente in fondo all'articolo una sezione "Licenza dei contenuti" con il testo obbligatorio CC-BY 4.0 in italiano. Il testo non può essere modificato dall'editor (è fisso nel template).
+### `note-legali` — Pagina Note Legali
 
-**Quando usarlo:** una sola volta, per la pagina Note Legali del sito. Il link alla pagina va inserito nel footer (vedere [note-legali.md](note-legali.md)).
+Usato per la pagina obbligatoria delle Note Legali (criterio C.SI.3.4 del Modello Comuni).
+
+**Quando usarlo:** una sola volta, per la pagina Note Legali del sito.
+
+**Cosa fa:** mostra il contenuto dell'articolo (che puoi usare per aggiungere note specifiche del tuo ente), e aggiunge automaticamente in fondo una sezione "Licenza dei contenuti" con il testo completo della licenza Creative Commons BY 4.0 in italiano. Questo testo non può essere modificato dall'editor — è fisso nel template per garantire che il testo ufficiale non venga alterato.
+
+Per la guida completa: [note-legali.md](note-legali.md).
 
 ---
 
-## Categorie e layout
+## Categorie e layout: due concetti distinti
 
-Ricorda che:
+È importante capire la differenza tra:
 
-- Il **layout dell'articolo** (scheda-servizio, note-legali) si imposta sull'**articolo singolo**
-- Il **layout della categoria** (servizi, notizie) si imposta sulla **voce di menu** che punta alla categoria (vedere [alberatura-categorie.md](alberatura-categorie.md))
+- **Layout dell'articolo** (`scheda-servizio`, `note-legali`): si imposta sull'**articolo singolo**, nella scheda Opzioni dell'articolo. Determina come viene visualizzato quell'articolo quando si apre la sua pagina.
+- **Layout della categoria** (`servizi`, `notizie`, `amministrazione`, `vivere`): si imposta sulla **voce di menu** che punta alla categoria. Determina come viene visualizzata la lista degli articoli di quella categoria.
 
-Questi due concetti sono indipendenti.
+Questi due concetti sono completamente indipendenti. Puoi avere una categoria Servizi con layout `servizi` (che mostra la lista), e ogni singolo articolo in quella categoria con layout `scheda-servizio` (che mostra il dettaglio).
 
 ---
 
 ## Articoli in evidenza
 
-Per marcare un articolo come "in evidenza" (es. per il carosello nell'header o per la sezione "In Evidenza" delle categorie Servizi e Notizie):
+Alcuni layout del template mostrano una sezione con articoli "in evidenza" (es. il carosello nella posizione `evidenza`, la sidebar dei Servizi, le notizie in primo piano). Per marcare un articolo come "in evidenza":
 
-- Nell'elenco articoli, clicca la stella nella colonna **In Evidenza**
-- Oppure nell'editor articolo, scheda **Pubblicazione** → campo **In Evidenza** impostato su Sì
+**Metodo 1 — Dalla lista articoli:**
+1. Vai su **Contenuti → Articoli**
+2. Nella colonna **In Evidenza**, clicca la stella dell'articolo che vuoi mettere in evidenza
+3. La stella diventa colorata: l'articolo è ora "in evidenza"
 
-> TODO – inserire screenshot dell'elenco articoli con la colonna "In Evidenza" e la stella cliccabile
+**Metodo 2 — Dall'editor dell'articolo:**
+1. Apri l'articolo in modifica
+2. Nella scheda **Pubblicazione** → campo **In Evidenza**: seleziona **Sì**
+3. Salva
+
+> *Screenshot — Lista articoli con la colonna "In Evidenza" visibile: alcune stelle sono piene (evidenziato) e altre sono vuote (non in evidenza)*
+
+**Dove vengono usati gli articoli in evidenza:**
+- Nel layout `servizi` → appaiono nella sidebar destra "Servizi in evidenza"
+- Nel layout `notizie` → appaiono nella sezione "In evidenza" in cima alla pagina (solo pagina 1)
+- Nel layout `amministrazione` → appaiono nella sezione "In evidenza" in cima alla pagina (solo pagina 1)
+- Nel layout `vivere` → appaiono nelle sezioni "Eventi in evidenza" e "Luoghi in evidenza"
+- Nel modulo `evidenza-singolo` → il carosello mostra solo gli articoli selezionati nel modulo (non usa il flag in evidenza della categoria)

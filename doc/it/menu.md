@@ -1,54 +1,80 @@
-# Menu
+# Menu di navigazione
 
-Il template prevede due posizioni per i menu di navigazione: `menu-principale` e `menu-secondario`. Entrambi richiedono l'uso del layout alternativo `comuni-menu`.
+Il template prevede due posizioni per i menu di navigazione nell'header: `menu-principale` e `menu-secondario`. Entrambe richiedono un passaggio specifico: il layout alternativo `comuni-menu`.
 
-## Prerequisiti
+---
 
-- Avere creato almeno un menu in Joomla (**Menus → Gestione Menu → Aggiungi nuovo menu**)
-- Avere aggiunto le voci di menu necessarie
+## Prima di iniziare
 
-> TODO – inserire screenshot della schermata "Gestione Menu" con un menu di esempio
+Assicurati di aver già creato almeno un menu in Joomla con le voci di menu necessarie. Se non l'hai ancora fatto:
+
+1. Vai su **Menu → Gestione Menu → Aggiungi nuovo menu**
+2. Dai un nome al menu (es. `Menu principale`)
+3. Salva, poi aggiungi le voci di menu da **Menu → [Nome menu] → Aggiungi voce di menu**
+
+> *Screenshot — Schermata "Gestione Menu" con un menu creato e le sue voci di menu elencate*
+
+---
+
+## Perché serve il layout `comuni-menu`
+
+Joomla genera l'HTML dei moduli menu in modo generico. Il template Bootstrap Italia richiede una struttura HTML specifica (con classi e attributi precisi) per il menu dell'header. Il layout alternativo `comuni-menu` è incluso nel template e produce esattamente quella struttura.
+
+Se usi il layout default di Joomla invece di `comuni-menu`, il menu appare nell'header ma **non funziona correttamente**: le voci potrebbero non essere formattate, i menu a tendina potrebbero non aprirsi, e la navigazione su mobile non funzionerà.
 
 ---
 
 ## Come creare un modulo menu con il layout `comuni-menu`
 
+Ripeti questi passaggi sia per il menu principale che per il menu secondario.
+
 1. Vai su **Estensioni → Moduli → Nuovo**
-2. Seleziona il tipo **Menu**
-3. Nella scheda **Modulo**:
-   - Scegli il menu da mostrare (campo **Select Menu**)
-   - In **Layout alternativo** seleziona `comuni-menu`
-4. Nella scheda **Assegnazione Menu**: scegli su quali pagine mostrare il modulo
-5. Nella scheda **Avanzate** → **Posizione modulo**: scegli `menu-principale` oppure `menu-secondario`
-6. Imposta **Stato** su *Pubblicato* e salva
+2. Nella lista dei tipi di modulo, seleziona **Menu**
 
-> TODO – inserire screenshot della scheda Modulo con il campo "Layout alternativo" impostato su `comuni-menu`
+3. Nella scheda **Modulo** del nuovo modulo, compila:
+   - **Titolo**: inserisci un titolo descrittivo (es. `Menu Principale`). Puoi nasconderlo dal frontend nella scheda Avanzate se preferisci.
+   - **Menu da mostrare**: seleziona il menu Joomla che vuoi mostrare (es. `Menu principale`)
+   - **Layout alternativo**: clicca sul menu a tendina e seleziona `comuni-menu`
 
-> TODO – inserire screenshot del dropdown delle posizioni con `menu-principale` selezionato
+4. Nella scheda **Assegnazione Menu**: scegli **Su tutte le pagine** (o le pagine specifiche dove vuoi il menu)
+
+5. Nella scheda **Avanzate**:
+   - **Posizione modulo**: digita o seleziona `menu-principale` (per il menu principale) oppure `menu-secondario` (per il menu secondario)
+
+6. Imposta lo **Stato** su *Pubblicato*
+
+7. Clicca **Salva e chiudi**
+
+> *Screenshot — Scheda "Modulo" del modulo Menu, con i campi "Menu da mostrare" e "Layout alternativo" evidenziati. Il campo Layout alternativo mostra "comuni-menu" selezionato.*
+
+> *Screenshot — Scheda "Avanzate" con il campo "Posizione modulo" impostato su "menu-principale"*
 
 ---
 
 ## Differenza tra menu principale e menu secondario
 
-| Posizione | Descrizione |
-|-----------|-------------|
-| `menu-principale` | Navigazione orizzontale principale, visibile nell'header |
-| `menu-secondario` | Navigazione secondaria, tipicamente più compatta, anch'essa nell'header |
+| Posizione | Descrizione | Uso tipico |
+|-----------|-------------|------------|
+| `menu-principale` | Navigazione orizzontale principale nella navbar | Link alle sezioni principali: Amministrazione, Notizie, Servizi, Vivere il Comune |
+| `menu-secondario` | Navigazione secondaria accanto al menu principale | Link rapidi: Novità, Contatti, FAQ |
 
-> TODO – inserire screenshot dell'header con menu principale e secondario evidenziati separatamente
+Entrambe le posizioni si trovano nella stessa barra (navbar) nell'header. La differenza è principalmente visiva e semantica.
+
+> *Screenshot — Navbar del sito con il menu principale evidenziato a sinistra e il menu secondario evidenziato a destra*
 
 ---
 
 ## Comportamento su mobile
 
-Su schermi piccoli la navbar si comprime in un pulsante hamburger. Cliccandolo si apre un pannello laterale con entrambi i menu.
+Su schermi piccoli (smartphone), la navbar mostra solo un pulsante hamburger (tre linee orizzontali). Cliccandolo si apre un pannello laterale che contiene entrambi i menu (principale e secondario).
 
-> TODO – inserire screenshot della navbar su mobile con il menu hamburger aperto
+> *Screenshot — Schermo mobile con il pulsante hamburger nell'header, e pannello laterale aperto con le voci di menu*
 
 ---
 
 ## Note
 
-- Il layout `comuni-menu` è obbligatorio: senza di esso la struttura HTML per Bootstrap Italia non viene generata correttamente.
-- Non è necessario creare due menu separati: è possibile assegnare lo stesso menu a entrambe le posizioni con layout diversi, oppure usare due menu distinti.
-- Le voci di menu non hanno limitazioni di tipo: puoi usare voci a URL, voci a categoria, voci ad articolo, ecc.
+- **Layout obbligatorio**: il layout `comuni-menu` è obbligatorio. Senza di esso la struttura HTML per Bootstrap Italia non viene generata correttamente e il menu non funziona.
+- **Stesso menu in entrambe le posizioni**: è possibile assegnare lo stesso menu Joomla sia a `menu-principale` che a `menu-secondario`. In quel caso lo stesso menu appare in entrambe le posizioni.
+- **Tipo di voci**: non ci sono limitazioni sul tipo di voci di menu che puoi usare — URL esterni, articoli, categorie, alias di menu, ecc.
+- **Menu a tendina (dropdown)**: le voci con sottovoci vengono automaticamente convertite in menu a tendina da Bootstrap Italia grazie al layout `comuni-menu`. Aggiungi semplicemente voci figlie nel backend di Joomla.
