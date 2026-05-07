@@ -477,7 +477,7 @@ $wa->addInlineStyle($inlineCss);
 	<?php endif; ?>
 	<?php if ($this->countModules('bottom')) : ?>
 	<section class="bottom-section ">
-      <div class="bg-primary py-5 pb-lg-80 px-lg-5 position-relative">
+      <div class="bg-primary py-5 px-lg-5 position-relative">
         <div class="container">
 			<jdoc:include type="modules" name="bottom" style="html5" />
         </div>
@@ -553,18 +553,15 @@ $tplSvg = $this->baseurl . '/templates/' . $this->template . '/svg/sprites.svg';
                                     </a>
                                 </li>
                                 <?php endif; ?>
-                            </ul>
-                            <?php if ($reportUrl) : ?>
-                            <h2 class="title-medium-2-semi-bold mt-4"><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_PROBLEMS_HEADING'); ?></h2>
-                            <ul class="contact-list p-0">
+                                <?php if ($reportUrl) : ?>
                                 <li>
                                     <a class="list-item" href="<?php echo $reportUrl; ?>">
                                         <svg class="icon icon-primary icon-sm" aria-hidden="true"><use href="<?php echo $tplSvg; ?>#it-map-marker-circle"></use></svg>
                                         <span><?php echo Text::_('TPL_ACCESSIBILE_CONTACT_REPORT_TEXT'); ?></span>
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

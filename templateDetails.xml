@@ -101,9 +101,9 @@
           <option value="1">JYES</option>
           <option value="0">JNO</option>
         </field>
-      </fieldset>
 
-      <fieldset name="contatta" label="TPL_ACCESSIBILE_CONTATTA_FIELDSET_LABEL">
+        <field type="note" label="TPL_ACCESSIBILE_CONTATTA_NOTE_LABEL" description="TPL_ACCESSIBILE_CONTATTA_NOTE_DESC" class="alert alert-info" />
+
         <field name="footer_faq" type="menuitem" label="TPL_ACCESSIBILE_FOOTER_FAQ_LABEL" description="TPL_ACCESSIBILE_FOOTER_FAQ_DESC" default="">
           <option value="">TPL_ACCESSIBILE_NONE_SELECTED</option>
         </field>
