@@ -88,11 +88,25 @@ $document->addCustomTag('<script type="application/ld+json" data-element="metata
                 <?php echo $this->escape($this->item->title); ?>
             </h1>
 
-            <?php $stato = $cfVal('cf_stato'); if ($stato) : ?>
-                <div data-element="service-status" class="mb-3">
-                    <span class="badge rounded-pill bg-primary"><?php echo $stato; ?></span>
-                </div>
-            <?php endif; ?>
+			<?php
+			$stato_raw = $cfRaw('cf_stato');
+			$stato     = $cfVal('cf_stato');
+			$isNo = (string)$stato_raw === '0';
+			$motivazioni = $cfVal('cf_motivo_stato_servizio');
+
+			if ($stato) : 
+			?>
+				<div data-element="service-status" class="mb-3">
+					<span class="badge rounded-pill <?php echo $isNo ? 'bg-danger' : 'bg-success'; ?>">
+						<?php echo $stato; ?>
+					</span>
+				</div>
+				<?php if ($isNo && $motivazioni) : ?>
+					<div data-element="service-reasons" class="mb-3 alert alert-warning">
+						<?php echo nl2br(htmlspecialchars($motivazioni)); ?>
+					</div>
+				<?php endif; ?>
+			<?php endif; ?>
 
             <?php if ($this->item->introtext) : ?>
                 <p class="lead mb-0" data-element="service-description">
