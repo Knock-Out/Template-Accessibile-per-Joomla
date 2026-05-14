@@ -41,6 +41,13 @@ $hasRightColumn = $document->countModules('colonna-destra') > 0;
 $leftColClass = 'col-lg-3';
 $centerColClass = $hasRightColumn ? 'col-lg-6' : 'col-lg-9';
 $rightColClass = 'col-lg-3';
+
+$document->getWebAssetManager()->registerAndUseScript(
+    'template.article-toc',
+    'media/templates/site/templateaccessibileperjoomla/js/article-toc.js',
+    [],
+    ['defer' => true]
+);
 ?>
     
     <div class="container pt-4">
