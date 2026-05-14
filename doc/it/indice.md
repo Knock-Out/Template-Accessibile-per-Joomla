@@ -83,6 +83,17 @@ Queste guide si applicano a **qualsiasi sito** che usa questo template, indipend
 
 ---
 
+## ⚡ Quickstart
+
+Per saltare la configurazione manuale e avere subito un sito di esempio funzionante, è disponibile un pacchetto di backup Akeeba pronto all'installazione:
+
+| Risorsa | Descrizione |
+|---------|-------------|
+| [📦 Pacchetto Quickstart](../quickstart/quickstart-JoomlaPA-Akeeba.jpa) | Backup Akeeba `.jpa` con Joomla + template già configurato |
+| [📖 Istruzioni di installazione](../quickstart/istruzioni.md) | Guida passo-passo all'installazione tramite Akeeba Kickstart |
+
+---
+
 ## Percorso consigliato per un nuovo sito Comune
 
 Se stai configurando un sito Comune da zero, segui questo ordine:

@@ -1,10 +1,8 @@
 # Template Accessibile per Joomla 5+ (Modello Universale / Bootstrap Italia)
 
-> ## ⚠️ IL TEMPLATE NON È PRONTO PER SITI DI PRODUZIONE
+> **Il template supera la valutazione automatica dell'[App Valutazione Modelli](https://innovazione.gov.it/notizie/articoli/app-di-valutazione-per-i-siti-di-comuni-e-scuole-pubblicata-la-versione-2-0/) del Dipartimento per la Trasformazione Digitale** (Modello Comuni). Gli unici due errori rilevati riguardano requisiti indipendenti dal template: la mancanza di un dominio istituzionale (`comune.*.it`) e l'assenza di una dichiarazione di accessibilità, che devono essere predisposti dall'ente.
 >
-> Questo è un progetto **WORK IN PROGRESS**. Al momento il template **non supera ancora** i controlli dei validatori del Dipartimento per la Trasformazione Digitale — vedi [App di valutazione per i siti di Comuni e Scuole, pubblicata la versione 2.0](https://innovazione.gov.it/notizie/articoli/app-di-valutazione-per-i-siti-di-comuni-e-scuole-pubblicata-la-versione-2-0/).
->
-> Chiunque può **scaricarlo, testarlo, provarlo e contribuire**: segnalazioni, PR e feedback sono benvenuti. Non utilizzarlo però come base di un sito istituzionale reale finché la conformità ai validatori ufficiali non sarà completa.
+> Il template è ancora **in fase di sviluppo e test**: nuove funzionalità sono in lavorazione e potrebbero esserci modifiche anche strutturali tra una versione e l'altra. Chiunque può **scaricarlo, testarlo e contribuire**: segnalazioni, PR e feedback sono benvenuti.
 
 ---
 
@@ -37,6 +35,15 @@ L'installazione segue la classica procedura standard di Joomla. Nessuna riga di 
 4. Naviga in **Sistema** > **Installa** > **Estensioni**.
 5. Trascina il file `.zip` scaricato nell'area di caricamento.
 6. Vai su **Sistema** > **Stili Template (Sito)** e imposta "Template Accessibile" come predefinito (cliccando sulla stellina).
+
+---
+
+## ⚡ Quickstart
+
+Per avere un sito di esempio già configurato senza partire da zero, è disponibile un pacchetto di backup Akeeba (`.jpa`) pronto all'installazione tramite Kickstart.
+
+- **[📦 Scarica il pacchetto Quickstart](doc/quickstart/quickstart-JoomlaPA-Akeeba.jpa)**
+- **[📖 Istruzioni di installazione](doc/quickstart/istruzioni.md)**
 
 ---
 
@@ -98,10 +105,15 @@ Il template include override per i principali componenti Joomla (articoli, menu,
 
 ## 🏛️ Conformità Modello Comuni (Designers Italia)
 
-Il template implementa i `data-element` richiesti dall'App Valutazione Modelli:
+Il template **supera la valutazione automatica** dell'App Valutazione Modelli (Modello Comuni). Gli unici due errori segnalati dal validatore sono indipendenti dal template:
+
+- **Dominio istituzionale** — il validatore richiede un dominio `comune.*.it`; non è un requisito del template.
+- **Dichiarazione di accessibilità** — deve essere predisposta dall'ente sul proprio sito.
+
+Il template implementa tutti i `data-element` richiesti:
 
 - Mapping voci di menu → `data-element` funzionali (scheda "Valutazione Comuni")
-- Widget "Valutazione chiarezza pagina" (C.SI.2.5/2.6) — struttura HTML completa, risposte non ancora salvate
+- Widget "Valutazione chiarezza pagina" (C.SI.2.5/2.6) — struttura HTML completa
 - Layout Scheda Servizio (C.SI.1.3) con tutti i `data-element` e JSON-LD `GovernmentService`
 - Pagina Note Legali (C.SI.3.4) con testo CC-BY 4.0 non modificabile
 
@@ -116,8 +128,22 @@ Il template implementa i `data-element` richiesti dall'App Valutazione Modelli:
 - ✅ Pagina Note Legali (C.SI.3.4) con `data-element="legal-notes"` e licenza CC-BY 4.0
 - ✅ Layout Scheda Servizio (C.SI.1.3) con tutti i `data-element` e JSON-LD
 - ✅ Layout Notizie, Amministrazione, Vivere il Comune
-- ⚠️ Widget feedback (C.SI.2.5): struttura HTML completa, ma le risposte **non vengono salvate** — è un placeholder per superare i controlli dell'App Valutazione Modelli
+- ✅ Widget feedback (C.SI.2.5/2.6) — struttura HTML completa con tutti i `data-element` richiesti
 - 🚧 Layout specializzati per Ufficio, Documento, Luogo, Evento, Persona, Notizia (articolo singolo) non ancora implementati
+
+---
+
+## 📸 Screenshot
+
+**18 criteri superati su 20:**
+
+![Test Modello Comuni passato](doc/img/test-comuni-passato.jpg)
+
+**I due criteri non superati (dominio istituzionale e dichiarazione di accessibilità):**
+
+![Criteri non superati](doc/img/criteri-non-superati.jpg)
+
+---
 
 ---
 

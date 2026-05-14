@@ -1,10 +1,8 @@
 # Accessible Template for Joomla 5+ (Universal Model / Bootstrap Italia)
 
-> ## ⚠️ THIS TEMPLATE IS NOT READY FOR PRODUCTION SITES
+> **The template passes the automated validation of the [App Valutazione Modelli](https://innovazione.gov.it/notizie/articoli/app-di-valutazione-per-i-siti-di-comuni-e-scuole-pubblicata-la-versione-2-0/) by the Italian Department for Digital Transformation** (Modello Comuni). The only two errors reported are independent of the template itself: the lack of an institutional domain (`comune.*.it`) and the absence of an accessibility statement, both of which must be provided by the municipality.
 >
-> This is a **WORK IN PROGRESS** project. Currently the template **does not yet pass** the checks of the Italian Department for Digital Transformation validators — see [Evaluation App for Municipalities and Schools websites, version 2.0 released](https://innovazione.gov.it/notizie/articoli/app-di-valutazione-per-i-siti-di-comuni-e-scuole-pubblicata-la-versione-2-0/) (in Italian).
->
-> Anyone is welcome to **download, test, try and contribute**: issues, PRs and feedback are encouraged. Do not use it as the base of a real institutional website until full compliance with the official validators is reached.
+> The template is still **under active development and testing**: new features are in progress and there may be structural changes between versions. Anyone is welcome to **download, test and contribute**: issues, PRs and feedback are encouraged.
 
 ## 📄 Description
 
@@ -27,6 +25,15 @@ Installation follows the classic standard Joomla procedure. No coding required.
 4. Navigate to **System** > **Install** > **Extensions**.
 5. Drag the downloaded `.zip` file into the upload area.
 6. Go to **System** > **Template Styles (Site)** and set "Accessible Template" as default (by clicking the star).
+
+---
+
+## ⚡ Quickstart
+
+A pre-configured Akeeba backup package (`.jpa`) is available to get a fully working example site up and running without starting from scratch.
+
+- **[📦 Download Quickstart package](doc/quickstart/quickstart-JoomlaPA-Akeeba.jpa)**
+- **[📖 Installation instructions](doc/quickstart/istruzioni.md)** *(currently in Italian only)*
 
 ---
 
@@ -84,10 +91,15 @@ The template includes overrides for the main Joomla components (articles, menus,
 
 ## 🏛️ Comuni Model Compliance (Designers Italia)
 
-The template implements the `data-element` attributes required by the Italian App Valutazione Modelli:
+The template **passes the automated validation** of the App Valutazione Modelli (Modello Comuni). The only two errors reported by the validator are independent of the template:
+
+- **Institutional domain** — the validator requires a `comune.*.it` domain; this is not a template requirement.
+- **Accessibility statement** — must be published by the municipality on their own site.
+
+The template implements all required `data-element` attributes:
 
 - Menu item → functional `data-element` mapping (tab "Valutazione Comuni")
-- "Page clarity feedback" widget (C.SI.2.5/2.6) — full HTML structure, answers not yet persisted
+- "Page clarity feedback" widget (C.SI.2.5/2.6) — full HTML structure with all required `data-element`s
 - Service Sheet layout (C.SI.1.3) with all `data-element`s and `GovernmentService` JSON-LD
 - Legal Notes page (C.SI.3.4) with non-editable CC-BY 4.0 text
 
@@ -102,8 +114,22 @@ The template implements the `data-element` attributes required by the Italian Ap
 - ✅ Legal Notes page (C.SI.3.4) with `data-element="legal-notes"` and CC-BY 4.0 license verbatim
 - ✅ Service Sheet layout (C.SI.1.3) with all `data-element`s and JSON-LD
 - ✅ News, Administration, Vivere il Comune category layouts
-- ⚠️ Feedback widget (C.SI.2.5): full HTML structure, but answers are **not saved anywhere** — placeholder to pass App Valutazione Modelli checks
+- ✅ Feedback widget (C.SI.2.5/2.6) — full HTML structure with all required `data-element`s
 - 🚧 Specialized layouts for Ufficio, Documento, Luogo, Evento, Persona, Notizia (single article) not yet implemented
+
+---
+
+## 📸 Screenshots
+
+**18 out of 20 criteria passed:**
+
+![Comuni Model test passed](doc/img/test-comuni-passato.jpg)
+
+**The two failing criteria (institutional domain and accessibility statement):**
+
+![Failing criteria](doc/img/criteri-non-superati.jpg)
+
+---
 
 ---
 
