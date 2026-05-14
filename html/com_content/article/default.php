@@ -17,6 +17,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
+Factory::getApplication()->getLanguage()->load('tpl_templateaccessibileperjoomla', JPATH_SITE);
+
 /** @var \Joomla\Component\Content\Site\View\Article\HtmlView $this */
 
 $params  = $this->item->params;
@@ -97,7 +99,7 @@ $rightColClass = 'col-lg-3';
             </div>
             
             <div class="col-lg-3 offset-lg-1">
-                <?php $spritePath = Uri::base(true) . '/templates/' . $app->getTemplate() . '/svg/sprites.svg'; ?>
+                <?php $spritePath = Uri::base(true) . 'media/templates/site/templateaccessibileperjoomla/svg/sprites.svg'; ?>
                 
                 <?php // Blocco Condividi ?>
                 <div class="d-flex align-items-center mb-3">

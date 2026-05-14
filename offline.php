@@ -60,14 +60,16 @@ if (!empty($faviconPng)) {
     $doc->addHeadLink($baseurl . ltrim($favPng->url, '/'), $relType, 'rel', ['type' => 'image/png']);
 }
 
-// Asset
-$wa      = $doc->getWebAssetManager();
-$tplPath = 'templates/' . $app->getTemplate();
+// INSERIMENTO ASSET E FONT-AWESOME
+$wa = $this->getWebAssetManager();
+$tplPath = 'templates/site/' . $this->template;
+$mediaPath = 'media/templates/site/templateaccessibileperjoomla';
+$baseMediaUrl = $this->baseurl . '/' . $mediaPath;
 
-$wa->registerAndUseStyle('template.styles', $tplPath . '/css/bootstrap-italia.min.css')
-   ->registerAndUseStyle('template.comuni', $tplPath . '/css/bootstrap-italia-comuni.css', [], [], ['template.styles'])
-   ->registerAndUseStyle('template.fonts', $tplPath . '/css/fonts.css')
-   ->registerAndUseScript('template.scripts', $tplPath . '/js/bootstrap-italia.bundle.min.js', [], ['defer' => true]);
+$wa->registerAndUseStyle('template.styles', 'bootstrap-italia.min.css')
+   ->registerAndUseStyle('template.comuni', 'bootstrap-italia-comuni.css', [], [], ['template.styles'])
+   ->registerAndUseStyle('template.fonts', 'fonts.css')
+   ->registerAndUseScript('template.scripts', 'bootstrap-italia.bundle.min.js', [], ['defer' => true]);
 
 // CSS variabili colore
 $hex = ltrim($colore, '#');

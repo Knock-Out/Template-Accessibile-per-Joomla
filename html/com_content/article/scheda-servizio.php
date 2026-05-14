@@ -22,6 +22,7 @@ use Joomla\CMS\Uri\Uri;
 /** @var \Joomla\Component\Content\Site\View\Article\HtmlView $this */
 
 $app      = Factory::getApplication();
+$app->getLanguage()->load('tpl_templateaccessibileperjoomla', JPATH_SITE);
 $document = $app->getDocument();
 $params   = $this->item->params;
 $canEdit  = $params->get('access-edit');
@@ -62,7 +63,7 @@ $menuAreaObj  = $menuItemArea ? $menu->getItem($menuItemArea) : null;
 $urlArea      = $menuAreaObj  ? Route::_('index.php?Itemid=' . $menuItemArea) : '';
 $titleArea    = $menuAreaObj  ? $menuAreaObj->title : '';
 
-$spritePath = Uri::base(true) . '/templates/' . $app->getTemplate() . '/svg/sprites.svg';
+$spritePath = Uri::base(true) . 'media/templates/site/templateaccessibileperjoomla/svg/sprites.svg';
 
 $hasRightColumn = $document->countModules('colonna-destra') > 0;
 $centerColClass = $hasRightColumn ? 'col-lg-6' : 'col-lg-9';
