@@ -1,5 +1,38 @@
 <changelogs>
 <changelog>
+    <element>templateaccessibileperjoomla</element>
+    <type>template</type>
+    <version>1.0.16</version>
+    <addition>
+        <item><![CDATA[Bottone "Torna in cima" configurabile dalla tab "Footer": parametri scroll_top (on/off), scroll_top_tipo (flottante/statico), scroll_top_posizione (destra/sinistra)]]></item>
+        <item><![CDATA[js/scroll-to-top.js (nuovo): gestione accessibile del focus sull'ancora #top al termine dell'animazione di scroll, in conformità con i criteri WCAG 2.1]]></item>
+        <item><![CDATA[script.php (nuovo): script di installazione/aggiornamento Joomla (InstallerScriptInterface) con verifica prerequisiti (Joomla ≥ 5.0.0, PHP ≥ 8.2.0) e forzatura di inheritable=1 sugli stili del template in fase di aggiornamento]]></item>
+        <item><![CDATA[Campo custom "Motivo stato servizio" (cf_motivo_stato_servizio) nella scheda servizio: alert di avvertimento con data-element="service-reasons" visualizzato quando lo stato del servizio è 0 (non attivo); badge dinamico bg-success/bg-danger]]></item>
+        <item><![CDATA[js/article-toc.js (nuovo) + override default.php: indice laterale di pagina (data-element="page-index") generato automaticamente dagli heading H2/H3 del corpo articolo, con indentazione visiva degli H3 e gestione degli ID duplicati]]></item>
+        <item><![CDATA[Blocco "Contatta il Comune" aggiunto anche alla pagina di errore (error.php), in parità con index.php]]></item>
+        <item><![CDATA[Immagini di sfondo predefinite per i cinque temi cromatici: blu-default.jpg, rosso-scuola.jpg, verde-acqua-asl.jpg, verde-comuni.png, viola-musei.jpg]]></item>
+        <item><![CDATA[Stili .back-to-top-left (posizione a sinistra) e .scroll-top-static (versione testuale nel footer)]]></item>
+        <item><![CDATA[Stili per i pulsanti di modifica frontend (.jmodedit, .btn.jmodedit): blu primario con bordo bianco e ombra per massima leggibilità su qualsiasi sfondo]]></item>
+        <item><![CDATA[Posizione modulo "debug" dichiarata in templateDetails.xml]]></item>
+        <item><![CDATA[Ancora <span id="top"> in cima alla pagina per la gestione accessibile del focus]]></item>
+        <item><![CDATA[Stringhe lingua (it-IT / en-GB): TPL_ACCESSIBILE_SCROLL_TOP_* per le opzioni "Torna in cima"; TPL_ACCESSIBILE_CF_MOTIVO_STATO_SERVIZIO_LABEL e TPL_ACCESSIBILE_CF_MOTIVO_STATO_SERVIZIO_DESC per il nuovo campo custom]]></item>
+    </addition>
+    <change>
+        <item><![CDATA[Supporto Child Templates: asset statici (CSS, JS, font, SVG, immagini) spostati da templates/site/templateaccessibileperjoomla/ a media/templates/site/templateaccessibileperjoomla/, come richiesto dall'architettura Joomla 5]]></item>
+        <item><![CDATA[templateDetails.xml: aggiunto <inheritable>1</inheritable> e nuovo blocco <media> per dichiarare gli asset nella posizione corretta]]></item>
+        <item><![CDATA[index.php, error.php, offline.php e tutti gli override PHP (default.php, scheda-servizio.php, note-legali.php, comuni-menu.php, layout di categoria e modulo): riferimenti agli asset aggiornati ai nuovi path media/…]]></item>
+        <item><![CDATA[offline.php: refactoring completo per parità funzionale con index.php — carica gli stessi asset (Bootstrap Italia, CSS del template, font), applica il tema cromatico tramite CSS custom properties, mostra logo, favicon, social link e blocco "Contatta il Comune"]]></item>
+        <item><![CDATA[Immagini template_preview.png e template_thumbnail.png spostate nella cartella images/]]></item>
+        <item><![CDATA[Alcune stringhe lingua esistenti rese più generiche per supportare contesti d'uso al di fuori del solo Modello Comuni]]></item>
+        <item><![CDATA[Aggiornato logo-comune.svg]]></item>
+    </change>
+    <fix>
+        <item><![CDATA[fix(css): colore di sfondo del bottone .back-to-top hardcoded (#007a52) — ora usa var(--bs-primary) per rispettare il tema scelto dall'amministratore]]></item>
+        <item><![CDATA[fix(css): colore hover del bottone .back-to-top hardcoded (#006e4a) — ora usa color-mix(in srgb, var(--bs-primary) 85%, black)]]></item>
+        <item><![CDATA[fix(install): workaround per bug Joomla nel caricamento degli asset da media/ — script.php forza inheritable=1 nel database per tutti gli stili del template già installati]]></item>
+    </fix>
+</changelog>
+<changelog>
       <element>templateaccessibileperjoomla</element>
       <type>template</type>
       <version>1.0.15</version>
