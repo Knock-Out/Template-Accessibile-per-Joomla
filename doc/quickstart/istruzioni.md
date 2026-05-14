@@ -6,11 +6,26 @@ Il ripristino avviene tramite **Akeeba Kickstart**, uno strumento PHP gratuito c
 
 ---
 
+> [!CAUTION]
+> ## 🔐 IMPORTANTE — IMPOSTA LA PASSWORD DEL SUPER ADMIN DURANTE L'INSTALLAZIONE
+>
+> Il pacchetto include un utente Super Admin preconfigurato:
+>
+> - **Username:** `joomlapa_admin`
+>
+> Durante lo script di ripristino Akeeba, nella sezione **"Super Administrator settings"**, **NON lasciare vuoto il campo password**: inserisci una **nuova password a tua scelta**, che diventerà la password effettiva di `joomlapa_admin` sul sito ripristinato.
+>
+> ❗ Se lasci il campo vuoto verrà mantenuta la password originale del pacchetto, che **tu non conosci** — risultato: non riuscirai più ad accedere al backend del sito appena installato.
+>
+> Scegli una password robusta (almeno 12 caratteri, con maiuscole, minuscole, numeri e simboli) e annotala in un posto sicuro.
+
+---
+
 ## Requisiti
 
 - PHP 8.2 o superiore
 - MySQL 8.0+ o MariaDB 10.4+
-- Spazio disco: almeno 500 MB liberi
+- Spazio disco: almeno 50 MB liberi
 - Un database vuoto già creato, con utente e password
 
 ---
@@ -43,7 +58,7 @@ Carica nella **cartella radice del sito** (solitamente `public_html`, `httpdocs`
 Apri nel browser l'URL del file Kickstart:
 
 ```
-https://tuodominio.it/ripristino.php
+https://tuodominio.it/kickstart.php
 ```
 
 Alla prima apertura viene mostrato un **dialogo iniziale** con avvisi di sicurezza. Leggi e premi **ESC** (o il pulsante di conferma) per proseguire alla pagina di configurazione.
@@ -107,7 +122,17 @@ Lo script di ripristino guida nei seguenti passi:
    - Password
    - Prefisso tabelle (lascia quello suggerito oppure cambiane uno personalizzato)
 3. **Configurazione sito** — URL e percorso del sito vengono rilevati automaticamente; verifica che siano corretti.
-4. **Fine** — lo script completa il ripristino e mostra il riepilogo. Chiudi questa finestra.
+4. 🔐 **Super Administrator settings — PASSAGGIO CRITICO**
+
+   In questa sezione lo script mostra i dati dell'utente Super Admin del pacchetto. **Devi impostare qui la password con cui accederai al backend dopo il ripristino**:
+
+   - **Username:** lascia `joomlapa_admin` (o cambialo se preferisci un altro nome)
+   - **Email:** sostituisci l'email del pacchetto con la tua
+   - **Password / Conferma password:** ⚠️ **NON lasciare vuoti questi campi.** Inserisci una **nuova password a tua scelta** — sarà la password effettiva dell'utente `joomlapa_admin` sul sito ripristinato.
+
+   > ⚠️ Se lasci il campo password vuoto, verrà mantenuta la password originale del pacchetto, che non conosci: non potrai più accedere al backend e dovrai resettarla manualmente da CLI o database.
+
+5. **Fine** — lo script completa il ripristino e mostra il riepilogo. Chiudi questa finestra.
 
 ---
 
@@ -121,13 +146,22 @@ Torna alla finestra di Kickstart e clicca **Clean Up**. Kickstart rimuoverà aut
 - I file di traduzione di Kickstart
 - I file di configurazione server rinominati in `.bak` (ripristinati ai nomi originali)
 
-Al termine puoi aprire il sito e accedere al pannello di amministrazione Joomla.
+Al termine puoi aprire il sito e accedere al pannello di amministrazione Joomla con `joomlapa_admin` e la password che hai impostato al passo 5.
 
 ---
 
-## Credenziali di default del sito di esempio
+## Credenziali di accesso al backend dopo il ripristino
 
-> Le credenziali di accesso al backend Joomla dell'archivio di esempio sono documentate separatamente o comunicate dal manutentore del pacchetto. Cambiale subito dopo il primo accesso.
+| Campo | Valore |
+|---|---|
+| **Username Super Admin** | `joomlapa_admin` (modificabile durante il ripristino) |
+| **Password Super Admin** | 🔐 **Quella che imposti tu** nel passo 5 dello script di ripristino. Non lasciare il campo vuoto, altrimenti la password resta quella originale del pacchetto (non nota a te). |
+
+> **Hai lasciato il campo password vuoto per errore?**
+> Puoi resettare la password del super utente da CLI senza ricominciare l'installazione:
+> ```bash
+> php cli/joomla.php user:reset-password --username=joomlapa_admin
+> ```
 
 ---
 
@@ -140,3 +174,4 @@ Al termine puoi aprire il sito e accedere al pannello di amministrazione Joomla.
 | Estrazione bloccata / AJAX error | Abbassa il valore di **Maximum Execution Time** nella sezione 3 |
 | Errore di connessione al database | Verifica host, nome database, utente e password; su alcuni hosting l'host non è `localhost` ma un indirizzo specifico |
 | `Parse Error` all'apertura di Kickstart | Il file è stato trasferito in modalità ASCII anziché Binary: ricaricalo in modalità Binary |
+| Non riesco ad accedere al backend perché ho lasciato vuoto il campo password al passo 5 | Resetta la password via CLI: `php cli/joomla.php user:reset-password --username=joomlapa_admin` |
