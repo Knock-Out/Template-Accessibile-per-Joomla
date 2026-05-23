@@ -15,6 +15,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
+$_parentTpl = \Joomla\CMS\Factory::getApplication()->getTemplate(true)->parent
+    ?: \Joomla\CMS\Factory::getApplication()->getTemplate();
+require_once JPATH_SITE . '/templates/' . $_parentTpl . '/helpers/TplAccessibileHelper.php';
+
 $app         = Factory::getApplication();
 $doc         = $app->getDocument();
 $params      = $app->getTemplate(true)->params;
@@ -60,16 +64,18 @@ if (!empty($faviconPng)) {
     $doc->addHeadLink($baseurl . ltrim($favPng->url, '/'), $relType, 'rel', ['type' => 'image/png']);
 }
 
-// INSERIMENTO ASSET E FONT-AWESOME
+// INSERIMENTO ASSET
 $wa = $this->getWebAssetManager();
-$tplPath = 'templates/site/' . $this->template;
-$mediaPath = 'media/templates/site/templateaccessibileperjoomla';
-$baseMediaUrl = $this->baseurl . '/' . $mediaPath;
 
-$wa->registerAndUseStyle('template.styles', 'bootstrap-italia.min.css')
-   ->registerAndUseStyle('template.comuni', 'bootstrap-italia-comuni.css', [], [], ['template.styles'])
-   ->registerAndUseStyle('template.fonts', 'fonts.css')
-   ->registerAndUseScript('template.scripts', 'bootstrap-italia.bundle.min.js', [], ['defer' => true]);
+$wa->useStyle('fontawesome')
+   ->useStyle('template.styles')
+   ->useStyle('template.comuni')
+   ->useStyle('template.fonts')
+   ->useScript('template.scripts');
+
+if (TplAccessibileHelper::mediaExists('css/custom.css')) {
+    $wa->registerAndUseStyle('template.custom', 'custom.css', [], [], ['template.comuni']);
+}
 
 // CSS variabili colore
 $hex = ltrim($colore, '#');
@@ -88,7 +94,6 @@ $inlineCss = ":root {
 }";
 $wa->addInlineStyle($inlineCss);
 
-$tplSvg      = $baseurl . 'templates/' . $app->getTemplate() . '/svg/sprites.svg';
 $offlineImage = $app->get('offline_image');
 $displayMsg   = (int) $app->get('display_offline_message', 1);
 $offlineMsg   = $app->get('offline_message');
@@ -157,7 +162,7 @@ $offlineMsg   = $app->get('offline_message');
                        target="_blank" rel="noopener noreferrer"
                        aria-label="<?php echo htmlspecialchars($social['label'], ENT_QUOTES, 'UTF-8'); ?> - <?php echo Text::_('TPL_ACCESSIBILE_NEW_WINDOW'); ?>">
                         <svg class="icon icon-lg icon-primary" aria-hidden="true">
-                            <use href="<?php echo $tplSvg; ?>#<?php echo $social['icon']; ?>"></use>
+                            <use href="<?= TplAccessibileHelper::spriteUrl($social['icon']) ?>"></use>
                         </svg>
                         <span class="visually-hidden"><?php echo htmlspecialchars($social['label'], ENT_QUOTES, 'UTF-8'); ?></span>
                     </a>
@@ -213,7 +218,7 @@ $offlineMsg   = $app->get('offline_message');
             <div class="row">
                 <div class="col-12 footer-items-wrapper logo-wrapper">
                     <?php if ($params->get('mostra_logo_ue', 1)) : ?>
-                    <img class="ue-logo" src="<?php echo $baseurl; ?>templates/<?php echo $app->getTemplate(); ?>/images/logo-eu-inverted.svg" alt="<?php echo Text::_('TPL_ACCESSIBILE_EU_LOGO_ALT'); ?>">
+                    <img class="ue-logo" src="<?= TplAccessibileHelper::mediaUrl('images/logo-eu-inverted.svg') ?>" alt="<?php echo Text::_('TPL_ACCESSIBILE_EU_LOGO_ALT'); ?>">
                     <?php endif; ?>
                     <div class="it-brand-wrapper">
                         <a href="<?php echo htmlspecialchars($baseurl, ENT_QUOTES, 'UTF-8'); ?>">
@@ -221,7 +226,7 @@ $offlineMsg   = $app->get('offline_message');
                                 <svg class="icon" aria-hidden="true"><image xlink:href="<?php echo htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8'); ?>" /></svg>
                             <?php endif; ?>
                             <div class="it-brand-text">
-                                <div class="it-brand-title"><?php echo htmlspecialchars($params->get('nomesito', 'Il mio Ente')); ?></div>
+                                <div class="it-brand-title h2"><?php echo htmlspecialchars($params->get('nomesito', 'Il mio Ente')); ?></div>
                                 <div class="it-brand-tagline d-none d-md-block"><?php echo htmlspecialchars($params->get('payoff', '')); ?></div>
                             </div>
                         </a>
