@@ -2,6 +2,47 @@
 <changelog>
     <element>templateaccessibileperjoomla</element>
     <type>template</type>
+    <version>1.1.0</version>
+    <addition>
+        <item><![CDATA[helpers/TplAccessibileHelper.php (nuovo): classe helper che centralizza la generazione degli URL per sprite SVG (spriteUrl()) e file multimediali (mediaUrl()), risolvendo in modo trasparente i percorsi tra template attivo e parent template per il pieno supporto ai child templates]]></item>
+        <item><![CDATA[Docblock architetturale in TplAccessibileHelper che motiva la scelta di non utilizzare HTMLHelper::mediaPath() (gestione cache, versione minima richiesta, superficie API superflua)]]></item>
+        <item><![CDATA[joomla.asset.json (nuovo): dichiarazione degli asset CSS/JS del template tramite Web Asset Manager di Joomla 4+, con corretta gestione delle dipendenze, dell'ordine di caricamento e del versionamento (inclusa la versione corretta di Font Awesome)]]></item>
+        <item><![CDATA[Moduli "Evidenza" pienamente configurabili dal backend: i layout evidenza-singolo.php ed evidenza-tre-colonne.php ora leggono e applicano i parametri standard di Joomla show_author, show_category, show_category_link, show_date, show_date_field, show_date_format, show_readmore, show_readmore_title, introtext_limit, readmore_limit, header_tag]]></item>
+        <item><![CDATA[Wrapper .cmp-evidenza-title aggiunto ai layout evidenza per uniformare la struttura HTML tra le due varianti]]></item>
+        <item><![CDATA[Nuovi stili in template-comuni.css per hero wrapper, card, breadcrumb, immagini di copertina e calendari servizi]]></item>
+        <item><![CDATA[templateDetails.xml e build.xml: dichiarata la nuova cartella helpers/ per l'installazione e il packaging della release]]></item>
+    </addition>
+    <change>
+        <item><![CDATA[Aggiornata la libreria core Bootstrap Italia alla versione 2.18.0 (file CSS e JS minificati); verificata la compatibilità con tutti gli override e i componenti esistenti]]></item>
+        <item><![CDATA[Refactor del caricamento degli asset: index.php, error.php e offline.php non costruiscono più manualmente i percorsi, ma delegano a Joomla via joomla.asset.json e usano TplAccessibileHelper per sprite e media]]></item>
+        <item><![CDATA[Rimosso il file ridondante bootstrap-italia-comuni.css; template-comuni.css è ora l'unico punto di personalizzazione degli stili del template]]></item>
+        <item><![CDATA[evidenza-tre-colonne.php: riscritto utilizzando la griglia nativa di Bootstrap (row g-4) per migliorare responsività e leggibilità del codice]]></item>
+        <item><![CDATA[evidenza-singolo.php: migliorato il posizionamento degli elementi e aggiunta la gestione object-fit: cover per le immagini in evidenza]]></item>
+        <item><![CDATA[.btn-outline-primary tematizzato tramite le variabili CSS del colore primario (--bs-primary) invece di colori hardcoded]]></item>
+        <item><![CDATA[Correzioni mirate ai componenti di Header e Footer per una migliore aderenza ai modelli di design ufficiali e per risolvere problemi di allineamento e visualizzazione su diverse dimensioni di viewport]]></item>
+        <item><![CDATA[Aggiornati gli override dei moduli (Articoli, Menu, Breadcrumbs) per usare le nuove classi CSS e migliorare l'accessibilità]]></item>
+        <item><![CDATA[index.php: il blocco del widget di feedback "chiarezza della pagina" (C.SI.2.5) è stato spostato sotto i blocchi delle posizioni bottom e bottom2, per garantire che il riquadro di valutazione resti l'ultimo elemento prima del footer]]></item>
+        <item><![CDATA[it-brand-title: aggiunta la classe h2 per la gerarchia tipografica, senza alterare la semantica del tag]]></item>
+        <item><![CDATA[Layout scheda-servizio: aggiunta mb-3 alla colonna contenuto e classe header-laterale alla sidebar per coerenza visiva]]></item>
+        <item><![CDATA[fonts.css: rimosse le dichiarazioni Font Awesome ridondanti; migliorata l'integrazione dei font locali]]></item>
+    </change>
+    <fix>
+        <item><![CDATA[fix(css): breadcrumb — colore link allineato a --bs-primary e margine mobile a 1.5rem]]></item>
+        <item><![CDATA[fix(css): navscroll — rimosso padding superfluo da .menu-wrapper]]></item>
+        <item><![CDATA[fix(css): navbar dropdown — larghezza fissa a 270px su schermi medi per evitare collassi del menù]]></item>
+        <item><![CDATA[fix(css): heading dentro .bg-evidenza — testo bianco per garantire il contrasto minimo richiesto da WCAG 2.1]]></item>
+        <item><![CDATA[fix(css): sezioni a sfondo grigio — esteso clip-path di 3rem verso il basso per una transizione corretta]]></item>
+        <item><![CDATA[fix(css): corretto il colore del pulsante "torna su" rispetto al tema attivo]]></item>
+        <item><![CDATA[fix(css): chip dei tag nel modulo evidenza (.mod-pa-chips-list .chip) — chip adattato al contenuto, testo centrato, altezza e padding rivisti]]></item>
+        <item><![CDATA[fix(layout): ulteriori rifiniture grafiche al layout evidenza-tre-colonne per allineamento e spaziatura degli elementi]]></item>
+        <item><![CDATA[fix(assets): custom.css ora viene caricato anche in error.php e offline.php, allineandone il comportamento a index.php]]></item>
+        <item><![CDATA[fix(svg): in vivere.php il riferimento allo sprite è stato migrato da href="#it-arrow-right" a TplAccessibileHelper::spriteUrl(), per garantire il funzionamento corretto in ambienti con child template]]></item>
+        <item><![CDATA[fix(layout): main section — padding corretto a py-5 (era py-1)]]></item>
+    </fix>
+</changelog>
+<changelog>
+    <element>templateaccessibileperjoomla</element>
+    <type>template</type>
     <version>1.0.16</version>
     <addition>
         <item><![CDATA[Bottone "Torna in cima" configurabile dalla tab "Footer": parametri scroll_top (on/off), scroll_top_tipo (flottante/statico), scroll_top_posizione (destra/sinistra)]]></item>
