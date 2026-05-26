@@ -848,3 +848,13 @@ a.jmodedit + div[role="tooltip"] {
 .back-to-top {
     background-color: var(--bs-primary) !important;
 }
+
+/* ============================================================
+   Banner avvisi (posizione modulo "avvisi")
+   ============================================================ */
+.avvisi-banner {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top:1rem;
+}

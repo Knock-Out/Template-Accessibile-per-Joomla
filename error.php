@@ -13,6 +13,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Registry\Registry;
 
 $_parentTpl = \Joomla\CMS\Factory::getApplication()->getTemplate(true)->parent
     ?: \Joomla\CMS\Factory::getApplication()->getTemplate();
@@ -236,6 +238,21 @@ $wa->addInlineStyle($inlineCss);
             </div>
         </div>
     </header>
+<?php foreach (ModuleHelper::getModules('avvisi') as $_avvisiMod) :
+    $_sfx   = trim((new Registry($_avvisiMod->params))->get('moduleclass_sfx', ''));
+    $_color = 'warning';
+    foreach (explode(' ', $_sfx) as $_tok) {
+        if (in_array($_tok, ['warning', 'danger', 'info', 'success'], true)) {
+            $_color = $_tok;
+            break;
+        }
+    } ?>
+<aside aria-label="<?php echo Text::_('TPL_ACCESSIBILE_AVVISI_REGION_LABEL'); ?>" class="avvisi-banner text-bg-<?php echo $_color; ?>">
+    <div class="container py-3">
+        <?php echo ModuleHelper::renderModule($_avvisiMod, ['style' => 'none']); ?>
+    </div>
+</aside>
+<?php endforeach; ?>
 
     <main id="main" class="main-section pb-5">
         <div class="container mt-4 mb-5" id="main-container">

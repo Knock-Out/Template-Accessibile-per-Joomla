@@ -7,6 +7,8 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Registry\Registry;
 
 $_parentTpl = \Joomla\CMS\Factory::getApplication()->getTemplate(true)->parent
     ?: \Joomla\CMS\Factory::getApplication()->getTemplate();
@@ -425,6 +427,21 @@ $wa->addInlineStyle($inlineCss);
                 </div>
               </div>
             </header>
+<?php foreach (ModuleHelper::getModules('avvisi') as $_avvisiMod) :
+    $_sfx   = trim((new Registry($_avvisiMod->params))->get('moduleclass_sfx', ''));
+    $_color = 'warning';
+    foreach (explode(' ', $_sfx) as $_tok) {
+        if (in_array($_tok, ['warning', 'danger', 'info', 'success'], true)) {
+            $_color = $_tok;
+            break;
+        }
+    } ?>
+<aside aria-label="<?php echo Text::_('TPL_ACCESSIBILE_AVVISI_REGION_LABEL'); ?>" class="avvisi-banner text-bg-<?php echo $_color; ?>">
+    <div class="container py-3">
+        <?php echo ModuleHelper::renderModule($_avvisiMod, ['style' => 'none']); ?>
+    </div>
+</aside>
+<?php endforeach; ?>
 <h1 class="visually-hidden" id="main-title"><?php echo htmlspecialchars($this->params->get('nomesito', 'Il mio Comune')); ?></h1>
       <?php if ($this->countModules('percorso')) : ?>
       <div id="percorso-section" class="container">
