@@ -676,31 +676,6 @@ aside .cmp-navscroll .navbar.it-navscroll-wrapper .link-list-wrapper ul li a.act
 	}
 }
 
-@media print {
-  .cmp-navscroll,
-  .dropdown,
-  [data-element="personal-area-login"],
-  footer,
-  header nav {
-    display: none !important;
-  }
-  .it-header-wrapper {
-    print-color-adjust: exact !important;
-    -webkit-print-color-adjust: exact !important;
-  }
-  .it-header-navbar-wrapper {
-    display: none !important;
-    width: 0 !important;
-  }
-  .it-header-center-wrapper,
-  .it-header-wrapper .it-nav-wrapper .it-brand-wrapper {
-    padding-left: 0 !important;
-  }
-  .it-search-wrapper {
-    display: none !important;
-  }
-}
-
 /* ============================================================
    Paginazione articoli prev/next (com_content)
    ============================================================ */

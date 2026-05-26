@@ -71,6 +71,7 @@ $wa->useStyle('fontawesome')
    ->useStyle('template.styles')
    ->useStyle('template.comuni')
    ->useStyle('template.fonts')
+   ->useStyle('template.print')
    ->useScript('template.scripts');
 
 if (TplAccessibileHelper::mediaExists('css/custom.css')) {

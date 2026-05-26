@@ -1,0 +1,50 @@
+/* ============================================================
+   A — Migrato da template-comuni.css (@media print)
+   ============================================================ */
+.cmp-navscroll,
+.dropdown,
+[data-element="personal-area-login"],
+footer,
+header nav,
+.it-header-slim-wrapper,
+.it-nav-wrapper {
+  display: none !important;
+}
+.it-header-wrapper {
+  print-color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
+}
+
+/* ============================================================
+   B — Nuovi blocchi da nascondere
+   ============================================================ */
+/* Colonna destra dell'articolo: Condividi, Azioni, Argomenti */
+.header-laterale { display: none !important; }
+/* Blocco "Contatta il comune" (sopra il footer in index.php) */
+#contatta-il-comune { display: none !important; }
+/* Widget feedback chiarezza pagina (C.SI.2.5) */
+[data-element="feedback"] { display: none !important; }
+/* Immagine di copertina full-bleed */
+.figure.img-full { display: none !important; }
+
+/* ============================================================
+   C — Layout a piena larghezza
+   ============================================================ */
+.container, .container-lg, .container-md,
+.container-sm, .container-xl, .container-xxl {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.px-lg-5, .px-lg-4, .px-lg-3 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+/* Colonna principale dell'articolo a 100% (la laterale è già nascosta) */
+#main-container .col-lg-8 {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  padding-left:15px!important;
+}
+/* Aside con indice scrollspy: completamente rimosso */
+#main-container aside { display: none !important; }

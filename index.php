@@ -114,6 +114,7 @@ $wa->useStyle('fontawesome')
    ->useStyle('template.styles')
    ->useStyle('template.comuni')
    ->useStyle('template.fonts')
+   ->useStyle('template.print')
    ->useScript('template.scripts');
 
 if ((int) $params->get('mostra_feedback', 0) === 1

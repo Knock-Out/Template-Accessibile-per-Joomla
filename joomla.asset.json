@@ -29,6 +29,17 @@
       "uri": "fonts.css"
     },
     {
+      "name": "template.print",
+      "type": "style",
+      "uri": "print.css",
+      "dependencies": [
+        "template.comuni"
+      ],
+      "attributes": {
+        "media": "print"
+      }
+    },
+    {
       "name": "template.scripts",
       "type": "script",
       "uri": "bootstrap-italia.bundle.min.js",
