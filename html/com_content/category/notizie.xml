@@ -41,6 +41,32 @@
                 label="Numero articoli in evidenza"
                 description="Quanti articoli mostrare nella sezione «In evidenza». Visibile solo se la sezione è attiva."
                 showon="show_featured_news:1" />
+
+            <field
+                name="esplora_heading_note"
+                type="note"
+                class="alert alert-info"
+                label="Intestazione «Esplora tutte le novità»"
+                description="Controlla l'intestazione (H2) sopra l'elenco completo degli articoli. «Default»: mostra «Esplora tutte le novità». «Nascondi»: rimuove l'intestazione. «Personalizzata»: permette di scrivere un titolo a piacere nel campo che compare sotto." />
+
+            <field
+                name="esplora_heading_mode"
+                type="list"
+                default="default"
+                label="Modalità intestazione"
+                class="form-select"
+                validate="options">
+                <option value="default">Default («Esplora tutte le novità»)</option>
+                <option value="nascondi">Nascondi</option>
+                <option value="personalizzata">Personalizzata</option>
+            </field>
+
+            <field
+                name="esplora_heading_custom"
+                type="text"
+                label="Testo intestazione personalizzata"
+                description="Testo da mostrare al posto di «Esplora tutte le novità»."
+                showon="esplora_heading_mode:personalizzata" />
         </fieldset>
 
         <fieldset name="basic" label="JGLOBAL_CATEGORY_OPTIONS">

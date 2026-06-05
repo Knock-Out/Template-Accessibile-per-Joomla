@@ -180,9 +180,16 @@ if ($showFeatured && $isFirstPage) {
     <?php // Sezione "Esplora tutte le novità" — tutti gli articoli + paginazione ?>
     <div class="notizie-explore py-5">
         <div class="container">
-            <h2 class="title-xxlarge mb-4">
-                <?php echo Text::_('TPL_ACCESSIBILE_NOTIZIE_ESPLORA'); ?>
-            </h2>
+            <?php
+            $esploraMode = (string) $this->params->get('esplora_heading_mode', 'default');
+            if ($esploraMode !== 'nascondi') :
+                $esploraCustom = trim((string) $this->params->get('esplora_heading_custom', ''));
+                $esploraTitle  = ($esploraMode === 'personalizzata' && $esploraCustom !== '')
+                    ? $this->escape($esploraCustom)
+                    : Text::_('TPL_ACCESSIBILE_NOTIZIE_ESPLORA');
+            ?>
+                <h2 class="title-xxlarge mb-4"><?php echo $esploraTitle; ?></h2>
+            <?php endif; ?>
 
             <?php if (empty($allItems)) : ?>
                 <?php if ($this->params->get('show_no_articles', 1)) : ?>
