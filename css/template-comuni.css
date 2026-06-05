@@ -1065,3 +1065,55 @@ a.jmodedit + div[role="tooltip"] {
 .leaflet-fullscreen-on .leaflet-control-fullscreen a .leaflet-control-fullscreen-icon {
     mask-image: url("/media/com_dpcalendar/images/icons/down-left-and-up-right-to-center.svg");
 }
+
+/* ── DPCalendar scheda evento (override com_dpcalendar/event/default) ── */
+
+/* Azzeriamo il padding 1rem che il CSS di DPCalendar (dpcalendar/views/event/default.css)
+   applica ai blocchi della scheda evento. Quel foglio è iniettato a runtime via dpdocument
+   DOPO template-comuni.css, quindi a pari specificità vincerebbe: serve !important.
+   Il nostro layout gestisce già spaziature e sfondi a livello di sezione. */
+.com-dpcalendar-event__information,
+.com-dpcalendar-event__actions,
+.com-dpcalendar-event__cta,
+.com-dpcalendar-event__description,
+.com-dpcalendar-event_small {
+    padding: 0 !important;
+}
+
+/* Mappa luogo: nascondiamo testi e bottoni del template standard di DPCalendar
+   (mostriamo solo la mappa dentro il wrapper .dp-locations-map-only). */
+.dp-locations-map-only .dp-heading,
+.dp-locations-map-only .dp-button-bar,
+.dp-locations-map-only .dp-location > h3,
+.dp-locations-map-only .dp-location__description,
+.dp-locations-map-only .dp-location__details-link,
+.dp-locations-map-only .dp-location__details {
+    display: none !important;
+}
+
+/* Bootstrap Italia applica margini negativi a .map-wrapper.map-column
+   (margin: 0 -24px e, da lg, margin-left: -3rem) che spostano la mappa
+   a sinistra e fuori colonna: li azzeriamo solo dentro #luogo. */
+#luogo .map-wrapper.map-column {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Il modificatore vendor com-dpcalendar-event_small vincola la larghezza:
+   forziamo la larghezza piena su mappa e contenitori. */
+.dp-locations-map-only,
+.dp-locations-map-only .com-dpcalendar-event__locations,
+.dp-locations-map-only .dp-location,
+.dp-locations-map-only .dp-map {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+}
+
+.dp-locations-map-only .dp-map {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    min-height: 400px;
+}

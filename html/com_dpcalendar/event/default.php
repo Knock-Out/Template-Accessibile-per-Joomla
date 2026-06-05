@@ -76,6 +76,60 @@ $locationsContent   = $this->loadTemplate('locations');
 $ticketsContent     = $this->loadTemplate('tickets');
 $tagsContent        = $this->loadTemplate('tags');
 
+// URL "Aggiungi al calendario" (Google / iCal-Outlook) — logica derivata da default_header.php
+$googleUrl = '';
+$icalUrl   = '';
+try {
+    $gStart = $this->dateHelper->getDate($event->start_date, $event->all_day);
+    $gEnd   = $this->dateHelper->getDate($event->end_date, $event->all_day);
+    $gFmt   = $event->all_day ? 'Ymd' : 'Ymd\THis';
+    if ($event->all_day) {
+        $gEnd->modify('+1 day');
+    }
+
+    // Indirizzo luogo (riusa la stessa composizione della sezione Luogo, niente dipendenza dal Geo model)
+    $gLocationParts = [];
+    if (!empty($event->locations)) {
+        foreach ($event->locations as $loc) {
+            $gLocationParts = array_filter([
+                $loc->title ?? '',
+                trim(($loc->street ?? '') . ' ' . ($loc->number ?? '')),
+                $loc->zip ?? '',
+                $loc->city ?? '',
+                $loc->province ?? '',
+            ]);
+            break; // primo luogo
+        }
+    }
+
+    $googleUrl  = 'https://www.google.com/calendar/render?action=TEMPLATE&text=' . urlencode((string) $event->title);
+    $googleUrl .= '&dates=' . $gStart->format($gFmt, true) . '%2F' . $gEnd->format($gFmt, true);
+    $googleUrl .= '&location=' . urlencode(implode(', ', $gLocationParts));
+    $googleUrl .= '&details=' . urlencode((string) HTMLHelper::_('string.truncate', $event->description, 200));
+    $googleUrl .= '&sf=true&output=xml';
+
+    $icalUrl = $this->router->route('index.php?option=com_dpcalendar&view=event&format=raw&id=' . $event->id . '&calid=' . $event->catid);
+} catch (\Throwable $e) {
+    $googleUrl = '';
+    $icalUrl   = '';
+}
+
+// URL evento — gate event_show_url (vedi default_information_url.php)
+$showUrl = !empty($event->url) && $params->get('event_show_url', '1');
+
+// Pulsante "Link evento" riutilizzabile (header meta + sezione "Collegamento esterno"), accessibile e con rel sicuro
+$externalLinkButton = '';
+if ($showUrl) {
+    $externalLinkButton = '<a class="btn btn-outline-primary d-inline-flex align-items-center" '
+        . 'href="' . htmlspecialchars((string) $event->url, ENT_QUOTES) . '" '
+        . 'target="_blank" rel="noopener noreferrer nofollow" '
+        . 'aria-label="' . htmlspecialchars(Text::_('TPL_ACCESSIBILE_EVENT_LINK') . ' ' . Text::_('TPL_ACCESSIBILE_NEW_WINDOW'), ENT_QUOTES) . '">'
+        . '<span>' . Text::_('TPL_ACCESSIBILE_EVENT_LINK') . '</span>'
+        . '<svg class="icon icon-primary icon-xs ms-2" aria-hidden="true"><use href="'
+        . TplAccessibileHelper::spriteUrl('it-external-link') . '"></use></svg>'
+        . '</a>';
+}
+
 // Mesi per il calendario verticale
 $monthNames = [];
 for ($m = 1; $m <= 12; $m++) {
@@ -103,11 +157,14 @@ if ($readingTime < 1) $readingTime = 1;
                 }
             } catch (\Throwable $e) {}
             ?>
+            <?php
+            // Meta evento in testata: categoria + organizzatori + a cura di (ogni voce rispetta il proprio gate)
+            $showHosts  = !empty($event->hosts) && $params->get('event_show_hosts', '1');
+            $showAuthor = !empty($this->authorName) && $params->get('event_show_author', '1');
+            ?>
             <?php if ($categoryTitle !== '') : ?>
-                <p class="category-top mb-1">
-                    <span class="category text-primary small fw-semibold text-uppercase">
-                        <?php echo $this->escape($categoryTitle); ?>
-                    </span>
+                <p class="category-top mb-1 small">
+                    <span class="category text-primary fw-semibold text-uppercase"><?php echo $this->escape($categoryTitle); ?></span>
                 </p>
             <?php endif; ?>
 
@@ -138,14 +195,28 @@ if ($readingTime < 1) $readingTime = 1;
                 ?>
             </h2>
 
+            <?php // Collegamento esterno: pulsante compatto (icona + testo) sotto la data ?>
+            <?php if ($showUrl) : ?>
+                <div class="mb-3">
+                    <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center"
+                       href="<?php echo $this->escape($event->url); ?>"
+                       target="_blank" rel="noopener noreferrer nofollow"
+                       aria-label="<?php echo Text::_('TPL_ACCESSIBILE_EVENT_LINK') . ' ' . Text::_('TPL_ACCESSIBILE_NEW_WINDOW'); ?>">
+                        <svg class="icon icon-primary icon-xs me-2" aria-hidden="true"><use href="<?php echo TplAccessibileHelper::spriteUrl('it-external-link'); ?>"></use></svg>
+                        <span><?php echo Text::_('TPL_ACCESSIBILE_EVENT_LINK'); ?></span>
+                    </a>
+                </div>
+            <?php endif; ?>
+
             <?php if (!empty($event->introText)) : ?>
                 <div class="lead">
                     <?php echo $event->introText; ?>
                 </div>
             <?php endif; ?>
+
         </div>
 
-        <div class="col-lg-3 offset-lg-1 header-laterale">
+        <div class="col-lg-3 offset-lg-1 header-laterale align-self-end">
 
             <?php // Condividi ?>
             <div class="d-flex align-items-center mb-3">
@@ -179,12 +250,14 @@ if ($readingTime < 1) $readingTime = 1;
             <div class="d-flex align-items-center mb-4">
                 <span class="subtitle-small fw-semibold text-muted me-3 mb-0"><?php echo Text::_('TPL_ACCESSIBILE_ACTIONS'); ?>:</span>
                 <div class="d-flex gap-2 align-items-center">
+                    <?php if ($params->get('event_show_print', 1)) : ?>
                     <button class="btn btn-action-icon d-flex align-items-center justify-content-center rounded"
                             onclick="window.print();"
                             title="<?php echo Text::_('TPL_ACCESSIBILE_PRINT_PAGE'); ?>"
                             aria-label="<?php echo Text::_('TPL_ACCESSIBILE_PRINT_PAGE'); ?>">
                         <svg class="icon icon-sm" aria-hidden="true"><use href="<?php echo TplAccessibileHelper::spriteUrl('it-print'); ?>"></use></svg>
                     </button>
+                    <?php endif; ?>
                     <a class="btn btn-action-icon d-flex align-items-center justify-content-center rounded"
                        href="mailto:?subject=<?php echo urlencode($event->title); ?>&amp;body=<?php echo urlencode(Uri::current()); ?>"
                        title="<?php echo Text::_('TPL_ACCESSIBILE_SEND_EMAIL'); ?>"
@@ -194,11 +267,37 @@ if ($readingTime < 1) $readingTime = 1;
                 </div>
             </div>
 
+            <?php // Salva evento (esporta su calendario) ?>
+            <?php if ($params->get('event_show_copy', '1') && ($googleUrl || $icalUrl)) : ?>
+            <div class="mb-4">
+                <span class="subtitle-small fw-semibold text-muted d-block mb-2"><?php echo Text::_('TPL_ACCESSIBILE_SAVE_EVENT'); ?>:</span>
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <?php if ($googleUrl) : ?>
+                    <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center"
+                       href="<?php echo $googleUrl; ?>"
+                       target="_blank" rel="noopener noreferrer"
+                       aria-label="<?php echo Text::_('TPL_ACCESSIBILE_ADD_TO_GOOGLE'); ?>">
+                        <svg class="icon icon-primary icon-xs me-2" aria-hidden="true"><use href="<?php echo TplAccessibileHelper::spriteUrl('it-google'); ?>"></use></svg>
+                        <span><?php echo Text::_('TPL_ACCESSIBILE_SAVE_EVENT_GOOGLE'); ?></span>
+                    </a>
+                    <?php endif; ?>
+                    <?php if ($icalUrl) : ?>
+                    <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center"
+                       href="<?php echo $icalUrl; ?>"
+                       aria-label="<?php echo Text::_('TPL_ACCESSIBILE_ADD_TO_ICAL'); ?>">
+                        <svg class="icon icon-primary icon-xs me-2" aria-hidden="true"><use href="<?php echo TplAccessibileHelper::spriteUrl('it-download'); ?>"></use></svg>
+                        <span><?php echo Text::_('TPL_ACCESSIBILE_SAVE_EVENT_OUTLOOK'); ?></span>
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
             <?php // Argomenti (Tags) ?>
             <?php if ($tagsContent) : ?>
                 <div class="mt-4 mb-4">
                     <span class="subtitle-small mb-2 d-block fw-semibold text-muted"><?php echo Text::_('TPL_ACCESSIBILE_TAGS'); ?></span>
-                    <?php echo $tagsContent; ?>
+                    <div class="comuni-tags"><?php echo $tagsContent; ?></div>
                 </div>
             <?php endif; ?>
 
@@ -257,9 +356,16 @@ if ($readingTime < 1) $readingTime = 1;
                                                     <?php endif; ?>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="#date-orari">
-                                                            <span><?php echo Text::_('TPL_ACCESSIBILE_SERVICE_DEADLINES'); ?></span>
+                                                            <span><?php echo Text::_('TPL_ACCESSIBILE_EVENT_DATE_ORARI'); ?></span>
                                                         </a>
                                                     </li>
+                                                    <?php if ($showUrl) : ?>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#collegamento-esterno">
+                                                            <span><?php echo Text::_('TPL_ACCESSIBILE_EVENT_URL'); ?></span>
+                                                        </a>
+                                                    </li>
+                                                    <?php endif; ?>
                                                     <?php // Indice campi aggiuntivi ?>
                                                     <?php if (!empty($event->jcfields)) : ?>
                                                         <?php foreach ($event->jcfields as $field) : ?>
@@ -316,6 +422,68 @@ if ($readingTime < 1) $readingTime = 1;
                     <?php echo HTMLHelper::_('content.prepare', $event->description); ?>
                 </div>
             </section>
+            <?php endif; ?>
+
+            <?php // Organizzatori e A cura di — card complementari, prima di Date e orari ?>
+            <?php if ($showHosts || $showAuthor) : ?>
+            <div class="row mb-30">
+                <?php if ($showHosts) : ?>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card-wrapper card-teaser-wrapper h-100">
+                        <div class="card shadow-sm rounded d-flex flex-row align-items-center h-100">
+                            <div class="card-teaser-icon d-flex align-items-center flex-shrink-0 ps-3 pe-1 py-2">
+                                <svg class="icon icon-primary icon-sm">
+                                    <use href="<?php echo TplAccessibileHelper::spriteUrl('it-pa'); ?>"></use>
+                                </svg>
+                            </div>
+                            <div class="card-body ps-2 py-2 pe-3">
+                                <h3 class="card-title h6 text-uppercase text-muted mb-1"><?php echo Text::_('TPL_ACCESSIBILE_EVENT_HOSTS'); ?></h3>
+                                <div class="card-text">
+                                    <p class="mb-0 fw-semibold"><?php
+                                        $hostCount = is_countable($event->hosts) ? count($event->hosts) : 0;
+                                        foreach ($event->hosts as $hIndex => $host) {
+                                            if (!empty($host->link)) {
+                                                echo '<a class="text-decoration-none" href="' . htmlspecialchars((string) $host->link, ENT_QUOTES) . '">' . $this->escape($host->name) . '</a>';
+                                            } else {
+                                                echo $this->escape($host->name);
+                                            }
+                                            if ($hIndex < $hostCount - 1) {
+                                                echo ', ';
+                                            }
+                                        }
+                                    ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if ($showAuthor) : ?>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card-wrapper card-teaser-wrapper h-100">
+                        <div class="card shadow-sm rounded d-flex flex-row align-items-center h-100">
+                            <div class="card-teaser-icon d-flex align-items-center flex-shrink-0 ps-3 pe-1 py-2">
+                                <svg class="icon icon-primary icon-sm">
+                                    <use href="<?php echo TplAccessibileHelper::spriteUrl('it-user'); ?>"></use>
+                                </svg>
+                            </div>
+                            <div class="card-body ps-2 py-2 pe-3">
+                                <h3 class="card-title h6 text-uppercase text-muted mb-1"><?php echo Text::_('TPL_ACCESSIBILE_EVENT_AUTHOR'); ?></h3>
+                                <div class="card-text">
+                                    <p class="mb-0 fw-semibold"><?php
+                                        if (!empty($event->contact_link)) {
+                                            echo '<a class="text-decoration-none" href="' . htmlspecialchars((string) $event->contact_link, ENT_QUOTES) . '">' . $this->authorName . ($this->avatar ?? '') . '</a>';
+                                        } else {
+                                            echo $this->authorName . ($this->avatar ?? '');
+                                        }
+                                    ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
             <?php endif; ?>
 
             <section class="it-page-section anchor-offset mb-30" id="date-orari">
@@ -403,7 +571,38 @@ if ($readingTime < 1) $readingTime = 1;
                     </div>
                     <?php endif; ?>
                 </div>
+
+                <?php // Ricorrenza (rrule) ?>
+                <?php if (!empty($event->rrule) && method_exists($this->dateHelper, 'transformRRuleToString')) : ?>
+                    <?php
+                    $rruleString = '';
+                    try {
+                        $rruleString = (string) $this->dateHelper->transformRRuleToString(
+                            $event->rrule,
+                            $event->start_date,
+                            $event->exdates ?? null
+                        );
+                    } catch (\Throwable $e) {
+                        $rruleString = '';
+                    }
+                    ?>
+                    <?php if ($rruleString !== '') : ?>
+                        <p class="mb-0">
+                            <span class="fw-semibold"><?php echo Text::_('TPL_ACCESSIBILE_EVENT_RECURRENCE'); ?>:</span>
+                            <?php echo nl2br($this->escape($rruleString)); ?>
+                        </p>
+                    <?php endif; ?>
+                <?php endif; ?>
             </section>
+
+            <?php // Collegamento esterno ?>
+            <?php if ($showUrl) : ?>
+            <section class="it-page-section anchor-offset mb-30" id="collegamento-esterno">
+                <h2 class="mb-3"><?php echo Text::_('TPL_ACCESSIBILE_EVENT_URL'); ?></h2>
+                <p class="mb-3"><?php echo Text::_('TPL_ACCESSIBILE_EVENT_EXTERNAL_LINK_INTRO'); ?></p>
+                <?php echo $externalLinkButton; ?>
+            </section>
+            <?php endif; ?>
 
             <?php // Sezione Campi Aggiuntivi ?>
             <?php if (!empty($event->jcfields)) : ?>
@@ -504,26 +703,23 @@ if ($readingTime < 1) $readingTime = 1;
 
                 <?php if ($params->get('event_show_map', '1')) : ?>
                     <div class="map-wrapper map-column mt-4">
-                        <style>
-                            /* Nascondiamo i testi e i bottoni del template standard di DPCalendar */
-                            .dp-locations-map-only .dp-heading,
-                            .dp-locations-map-only .dp-button-bar,
-                            .dp-locations-map-only .dp-location > h3,
-                            .dp-locations-map-only .dp-location__description,
-                            .dp-locations-map-only .dp-location__details-link,
-                            .dp-locations-map-only .dp-location__details {
-                                display: none !important;
-                            }
-                            .dp-locations-map-only .dp-map {
-                                border-radius: 8px;
-                                border: 1px solid #dee2e6;
-                                min-height: 400px;
-                            }
-                        </style>
                         <div class="dp-locations-map-only">
                             <?php echo $this->loadTemplate('locations'); ?>
                         </div>
                     </div>
+                    <script>
+                        /* Leaflet calcola le dimensioni all'init: dopo che il layout è a larghezza piena
+                           forziamo un ricalcolo (invalidateSize via evento resize) così la mappa riempie il box. */
+                        (function () {
+                            var refit = function () { window.dispatchEvent(new Event('resize')); };
+                            var run = function () { setTimeout(refit, 100); setTimeout(refit, 500); };
+                            if (document.readyState === 'complete') {
+                                run();
+                            } else {
+                                window.addEventListener('load', run);
+                            }
+                        })();
+                    </script>
                 <?php endif; ?>
             </section>
             <?php endif; ?>
