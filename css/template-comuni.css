@@ -93,13 +93,22 @@
     padding-bottom:20px;
 }
 
-dd, ol, ul {
-    margin: 0;
-    padding: 0;
+/* Reset liste-UI non gestite da Bootstrap Italia
+   (sostituiscono il vecchio reset globale dd, ol, ul: le liste editoriali nel
+   corpo articolo tornano native grazie al reboot di Bootstrap Italia, mentre
+   queste poche liste strutturali vanno neutralizzate esplicitamente). */
+.contact-list {
+    padding-left: 0;
     list-style: none;
-    list-style-position: initial;
-    list-style-image: initial;
-    list-style-type: none;
+}
+.link-list {
+    padding-left: 0;
+    list-style: none;
+}
+.it-socials ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .cmp-contacts .contact-list li {
