@@ -2,6 +2,35 @@
 <changelog>
     <element>templateaccessibileperjoomla</element>
     <type>template</type>
+    <version>1.2.0</version>
+    <addition>
+        <item><![CDATA[Integrazione DPCalendar (Modello Comuni): override completi del componente per gestire gli eventi secondo la sezione 5.3 del Modello Comuni (Designers Italia), realizzando il content-type evento della Fase 4 della roadmap]]></item>
+        <item><![CDATA[html/com_dpcalendar/calendar/vivere.php + vivere.xml (nuovo): pagina "Vivere il Comune" con sezioni "Eventi in evidenza" e "Luoghi in evidenza"; logica ibrida per i luoghi (da DPCalendar oppure da una categoria di articoli com_content marcati In evidenza), con opzione per includere le sottocategorie discendenti]]></item>
+        <item><![CDATA[html/com_dpcalendar/list/eventi.php + sotto-template eventi_evidenza, eventi_filtro, eventi_lista + eventi.xml (nuovo): lista eventi con carousel "In evidenza" Bootstrap Italia opzionale, form di filtro (testo, calendario, intervallo date), card configurabili (immagine, calendario/categoria, luogo), troncamento descrizione e intestazione hero personalizzabile]]></item>
+        <item><![CDATA[html/com_dpcalendar/event/default.php (nuovo): scheda singolo evento riscritta sul pattern "Scheda Servizio", a due colonne con indice appiccicoso (Table of Contents) e sezioni separate da H2; Vertical Calendar per date e orari, gestione eventi "tutto il giorno", mappa nella sezione Luogo, blocco prenotazioni (booking) e date della serie per gli eventi ricorrenti; supporto ai campi aggiuntivi con embed automatico URL YouTube/Vimeo e gallery dai subform con immagini]]></item>
+        <item><![CDATA[html/mod_dpcalendar_upcoming/joomlaPA.php (nuovo): layout dedicato per il modulo "Prossimi eventi" (mod_dpcalendar_upcoming)]]></item>
+        <item><![CDATA[Nuova posizione modulo "avvisi" (dichiarata in templateDetails.xml e renderizzata in index.php subito sotto l'intestazione e prima del breadcrumb) per i banner di comunicazione istituzionale: modalità dimostrativa, manutenzioni, disservizi, allerte, comunicazioni urgenti]]></item>
+        <item><![CDATA[Banner avvisi con colore configurabile dal Suffisso classe CSS modulo: warning (arancione, default), danger (rosso), info (azzurro), success (verde); whitelist con fallback automatico a warning per valori non riconosciuti e supporto a più classi separate da spazio]]></item>
+        <item><![CDATA[Banner avvisi multipli: più moduli sulla stessa posizione vengono impilati secondo l'ordinamento; ogni avviso è avvolto in un <aside> con aria-label dedicato (regione complementare navigabile per landmark, non live region, adatto a comunicazioni persistenti)]]></item>
+        <item><![CDATA[css/print.css (nuovo): foglio di stile dedicato alla stampa, dichiarato nel joomla.asset.json e caricato via Web Asset Manager in index.php, error.php e offline.php; nasconde gli elementi non pertinenti (header nav, menu, dropdown, login, footer, navscroll) e forza la resa cromatica corretta dell'header (print-color-adjust: exact)]]></item>
+        <item><![CDATA[Layout categoria Notizie: l'intestazione H2 "Esplora tutte le novità" è ora controllabile da backend (notizie.xml) con opzioni Default, Nascondi o Personalizzata con testo libero]]></item>
+        <item><![CDATA[Nuovi stili in template-comuni.css (+314 righe) per banner avvisi, card eventi, hero "Vivere", Vertical Calendar e allineamento dei pulsanti "Leggi di più"]]></item>
+        <item><![CDATA[Documentazione: nuovi file doc/it/integrazione-DPCalendar.md (guida completa a menu, configurazione e FAQ/debugging), doc/it/layout-vivere.md e doc/it/avvisi.md]]></item>
+    </addition>
+    <change>
+        <item><![CDATA[Regole @media print: le dichiarazioni precedentemente sparse in template-comuni.css sono state migrate e centralizzate nel nuovo css/print.css]]></item>
+        <item><![CDATA[Gli override DPCalendar seguono lo stesso pattern degli override com_content già presenti nel template; le opzioni di ciascun layout sono configurabili dal backend tramite i rispettivi file .xml]]></item>
+        <item><![CDATA[Internazionalizzazione: tutte le nuove stringhe aggiunte in language/it-IT e language/en-GB (tpl_templateaccessibileperjoomla.ini)]]></item>
+        <item><![CDATA[Aggiornato il pacchetto quickstart (doc/quickstart/quickstart-JoomlaPA-Akeeba.jpa)]]></item>
+    </change>
+    <fix>
+        <item><![CDATA[fix(layout): rifiniture alla visualizzazione delle liste]]></item>
+        <item><![CDATA[fix(layout): rifiniture alla resa della scheda singolo evento DPCalendar]]></item>
+    </fix>
+</changelog>
+<changelog>
+    <element>templateaccessibileperjoomla</element>
+    <type>template</type>
     <version>1.1.0</version>
     <addition>
         <item><![CDATA[helpers/TplAccessibileHelper.php (nuovo): classe helper che centralizza la generazione degli URL per sprite SVG (spriteUrl()) e file multimediali (mediaUrl()), risolvendo in modo trasparente i percorsi tra template attivo e parent template per il pieno supporto ai child templates]]></item>
